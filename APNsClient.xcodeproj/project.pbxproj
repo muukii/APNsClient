@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,7 @@
 		4B1121C62385F1D500C7517E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B1121C52385F1D500C7517E /* Assets.xcassets */; };
 		4B1121C92385F1D500C7517E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B1121C82385F1D500C7517E /* Preview Assets.xcassets */; };
 		4B1121CC2385F1D500C7517E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B1121CA2385F1D500C7517E /* Main.storyboard */; };
+		4B84F3AF2388052800D8BC75 /* APNSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4B84F3AE2388052800D8BC75 /* APNSwift */; };
 		EEC144966F342388DF8242A4 /* Pods_APNsClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B252E0F2CCD70E8EA8AC77AB /* Pods_APNsClient.framework */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B84F3AF2388052800D8BC75 /* APNSwift in Frameworks */,
 				EEC144966F342388DF8242A4 /* Pods_APNsClient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,7 +97,6 @@
 				24A2F14BC0C3B8775F22108B /* Pods-APNsClient.debug.xcconfig */,
 				D903A2D7F2EE6D2AF36C664C /* Pods-APNsClient.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -117,6 +118,9 @@
 			dependencies = (
 			);
 			name = APNsClient;
+			packageProductDependencies = (
+				4B84F3AE2388052800D8BC75 /* APNSwift */,
+			);
 			productName = APNsClient;
 			productReference = 4B1121BE2385F1D200C7517E /* APNsClient.app */;
 			productType = "com.apple.product-type.application";
@@ -145,6 +149,9 @@
 				Base,
 			);
 			mainGroup = 4B1121B52385F1D100C7517E;
+			packageReferences = (
+				4B84F3AD2388052800D8BC75 /* XCRemoteSwiftPackageReference "APNSwift" */,
+			);
 			productRefGroup = 4B1121BF2385F1D200C7517E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -412,6 +419,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4B84F3AD2388052800D8BC75 /* XCRemoteSwiftPackageReference "APNSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:kylebrowning/APNSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4B84F3AE2388052800D8BC75 /* APNSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4B84F3AD2388052800D8BC75 /* XCRemoteSwiftPackageReference "APNSwift" */;
+			productName = APNSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4B1121B62385F1D100C7517E /* Project object */;
 }
