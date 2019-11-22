@@ -13,6 +13,10 @@
 		4B1121C92385F1D500C7517E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B1121C82385F1D500C7517E /* Preview Assets.xcassets */; };
 		4B1121CC2385F1D500C7517E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B1121CA2385F1D500C7517E /* Main.storyboard */; };
 		4B84F3AF2388052800D8BC75 /* APNSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4B84F3AE2388052800D8BC75 /* APNSwift */; };
+		4BF9A1242388390A0045AA58 /* EditableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF9A1232388390A0045AA58 /* EditableTextView.swift */; };
+		4BF9A1262388523D0045AA58 /* ApplicationContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF9A1252388523D0045AA58 /* ApplicationContainer.swift */; };
+		4BF9A1282388527D0045AA58 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF9A1272388527D0045AA58 /* AppState.swift */; };
+		4BF9A12A238854630045AA58 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF9A129238854630045AA58 /* RootView.swift */; };
 		EEC144966F342388DF8242A4 /* Pods_APNsClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B252E0F2CCD70E8EA8AC77AB /* Pods_APNsClient.framework */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +30,10 @@
 		4B1121CB2385F1D500C7517E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4B1121CD2385F1D500C7517E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B1121CE2385F1D500C7517E /* APNsClient.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = APNsClient.entitlements; sourceTree = "<group>"; };
+		4BF9A1232388390A0045AA58 /* EditableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableTextView.swift; sourceTree = "<group>"; };
+		4BF9A1252388523D0045AA58 /* ApplicationContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationContainer.swift; sourceTree = "<group>"; };
+		4BF9A1272388527D0045AA58 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		4BF9A129238854630045AA58 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		B252E0F2CCD70E8EA8AC77AB /* Pods_APNsClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APNsClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D903A2D7F2EE6D2AF36C664C /* Pods-APNsClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APNsClient.release.xcconfig"; path = "Target Support Files/Pods-APNsClient/Pods-APNsClient.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -64,8 +72,13 @@
 		4B1121C02385F1D200C7517E /* APNsClient */ = {
 			isa = PBXGroup;
 			children = (
+				4BF9A12B238854FD0045AA58 /* Backend */,
 				4B1121C12385F1D200C7517E /* AppDelegate.swift */,
 				4B1121C32385F1D200C7517E /* ContentView.swift */,
+				4BF9A129238854630045AA58 /* RootView.swift */,
+				4BF9A1232388390A0045AA58 /* EditableTextView.swift */,
+				4BF9A1252388523D0045AA58 /* ApplicationContainer.swift */,
+				4BF9A1272388527D0045AA58 /* AppState.swift */,
 				4B1121C52385F1D500C7517E /* Assets.xcassets */,
 				4B1121CA2385F1D500C7517E /* Main.storyboard */,
 				4B1121CD2385F1D500C7517E /* Info.plist */,
@@ -81,6 +94,13 @@
 				4B1121C82385F1D500C7517E /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		4BF9A12B238854FD0045AA58 /* Backend */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Backend;
 			sourceTree = "<group>";
 		};
 		A3F11B4C356A81D2F49D5189 /* Frameworks */ = {
@@ -221,6 +241,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BF9A1262388523D0045AA58 /* ApplicationContainer.swift in Sources */,
+				4BF9A1282388527D0045AA58 /* AppState.swift in Sources */,
+				4BF9A12A238854630045AA58 /* RootView.swift in Sources */,
+				4BF9A1242388390A0045AA58 /* EditableTextView.swift in Sources */,
 				4B1121C42385F1D200C7517E /* ContentView.swift in Sources */,
 				4B1121C22385F1D200C7517E /* AppDelegate.swift in Sources */,
 			);
