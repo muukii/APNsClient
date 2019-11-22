@@ -38,21 +38,24 @@ struct ContentView: View {
         Text("Session") + Text(state.count.description).foregroundColor(.blue)
       }
       
-      TextField("Bundle Identifier", text: $bundleID, onEditingChanged: { _ in }, onCommit: {})
-      
-      TextField("KeyID", text: $keyID, onEditingChanged: { _ in }, onCommit: {})
-      
-      TextField("TeamID", text: $teamID, onEditingChanged: { _ in }, onCommit: {})
-      
-      TextField("Device Token", text: $deviceToken, onEditingChanged: { _ in }, onCommit: {})
-      
-      MenuButton(label: Text(enviroment)) {
-        Button(action: {
-          self.isProduction = true
-        }) { Text("Production") }
-        Button(action: {
-          self.isProduction = false
-        }) { Text("Development") }
+      Group {
+        
+        TextField("Bundle Identifier", text: $bundleID, onEditingChanged: { _ in }, onCommit: {})
+        
+        TextField("KeyID", text: $keyID, onEditingChanged: { _ in }, onCommit: {})
+        
+        TextField("TeamID", text: $teamID, onEditingChanged: { _ in }, onCommit: {})
+        
+        TextField("Device Token", text: $deviceToken, onEditingChanged: { _ in }, onCommit: {})
+        
+        MenuButton(label: Text(enviroment)) {
+          Button(action: {
+            self.isProduction = true
+          }) { Text("Production") }
+          Button(action: {
+            self.isProduction = false
+          }) { Text("Development") }
+        }
       }
       
       EditableTextView(text: $payload)
@@ -62,16 +65,19 @@ struct ContentView: View {
         Text("Send")
       }
       
-      Button(action: {
-        self.appContext.stack.service.globalIncrement()
-      }) {
-        Text("Global")
-      }
-      
-      Button(action: {
-        self.appContext.stack.service.increment()
-      }) {
-        Text("Sesson")
+      Group {
+        
+        Button(action: {
+          self.appContext.stack.service.globalIncrement()
+        }) {
+          Text("Global")
+        }
+        
+        Button(action: {
+          self.appContext.stack.service.increment()
+        }) {
+          Text("Sesson")
+        }
       }
     }
     .padding(24)
