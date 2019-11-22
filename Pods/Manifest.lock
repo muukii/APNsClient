@@ -1,0 +1,22 @@
+PODS:
+  - VergeStore (6.0.0-alpha.1)
+
+DEPENDENCIES:
+  - "VergeStore (from `git@github.com:muukii/Verge`, branch `store`)"
+
+EXTERNAL SOURCES:
+  VergeStore:
+    :branch: store
+    :git: "git@github.com:muukii/Verge"
+
+CHECKOUT OPTIONS:
+  VergeStore:
+    :commit: 37b5bd87d180f47070a23d065f9f2654a619b859
+    :git: "git@github.com:muukii/Verge"
+
+SPEC CHECKSUMS:
+  VergeStore: 5ef0d75442455629feb02fc15038b97925ef33bf
+
+PODFILE CHECKSUM: 1967b8c81fe1587d2358e4d1f1876e46e3f19fa2
+
+COCOAPODS: 1.8.4
