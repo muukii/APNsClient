@@ -20,6 +20,8 @@ public struct AppState: StateType {
 public struct SessionState: Identifiable {
   
   public let id = UUID().uuidString
+  
+  public var p8FileURL: URL?
     
   public var count: Int = 0
 

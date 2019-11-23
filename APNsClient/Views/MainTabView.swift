@@ -44,14 +44,43 @@ struct MainTabView: View {
     }
   }
   
-  var body: some View {
-           
-    VStack {
-      Button(action: {
-        self.uiDispatcher.addTab()
-      }) {
-        Text("New Tab")
+  private func selectFileView() -> some View {
+    Button(action: {
+      let panel = NSOpenPanel()
+      panel.allowedFileTypes = ["p8"]
+      panel.begin { (response) in
+        guard response == .OK else { return }
+        let url = panel.urls.first!
+        self.context.stack.service.setP8FileURL(url)
       }
+    }) {
+      Text("Select p8 file")
+    }
+  }
+  
+  private func newTabView() -> some View {
+    Button(action: {
+      self.uiDispatcher.addTab()
+    }) {
+      Text("New Push")
+    }
+  }
+  
+  var body: some View {
+    
+    VStack {
+      VStack {
+        HStack {
+          newTabView()
+          selectFileView()
+          Spacer()
+        }
+        HStack {
+          Text(sessionState.p8FileURL?.absoluteString ?? "No p8 file")
+          Spacer()
+        }
+      }
+      .padding(8)
       HStack {
         List {
           ForEach(uiState.editingPushes()) { (item) in
