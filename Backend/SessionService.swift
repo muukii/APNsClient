@@ -16,6 +16,8 @@ public final class SessionService: Dispatcher<AppState>, ScopedDispatching {
   
   public let selector: WritableKeyPath<SessionService.State, SessionState>
   
+  private let queue: DispatchQueue = .init(label: "push")
+  
   init(sessionStateID: String) {
     self.selector = \AppState.sessions[sessionStateID]!
     super.init(target: ApplicationContainer.store)
@@ -51,41 +53,43 @@ public final class SessionService: Dispatcher<AppState>, ScopedDispatching {
     payload: String,
     deviceToken: String
   ) {
-        
-    do {
+    
+    dispatch { (c) in
       
-      let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
-      let signer = try! APNSwiftSigner(filePath: "xxx.p8")
-      
-      let apnsConfig = APNSwiftConfiguration(
-        keyIdentifier: keyID,
-        teamIdentifier: teamID,
-        signer: signer,
-        topic: topic,
-        environment: enviroment
-      )
-      
-      struct BasicNotification: APNSwiftNotification {
-        var aps: APNSwiftPayload
+      queue.async {
+        guard let url = c.scopedState.p8FileURL else { return }
+        do {
+          
+          let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
+          let signer = try! APNSwiftSigner(filePath: url.path)
+          
+          let apnsConfig = APNSwiftConfiguration(
+            keyIdentifier: keyID,
+            teamIdentifier: teamID,
+            signer: signer,
+            topic: topic,
+            environment: enviroment
+          )
+          
+          let apns = try APNSwiftConnection.connect(configuration: apnsConfig, on: group.next()).wait()
+          
+          var allocator = ByteBufferAllocator().buffer(capacity: payload.utf8.count)
+          allocator.writeBytes(Array(payload.utf8))
+          
+          let res = apns.send(rawBytes: allocator, pushType: .alert, to: deviceToken)
+          print(res)
+          
+          try apns.close().wait()
+          try group.syncShutdownGracefully()
+          
+        } catch {
+          
+          print(error)
+          
+        }
       }
-      let apns = try APNSwiftConnection.connect(configuration: apnsConfig, on: group.next()).wait()
-//      let alert = APNSwiftPayload.APNSwiftAlert(title: "Hey There", subtitle: "Full moon sighting", body: "There was a full moon last night did you see it")
-//      let aps = APNSwiftPayload(alert: alert, badge: 1, sound: .normal("cow.wav"))
-//      let notification = BasicNotification(aps: aps)
-      
-      var allocator = ByteBufferAllocator().buffer(capacity: payload.utf8.count)
-      allocator.writeBytes(Array(payload.utf8))
-            
-      let res = apns.send(rawBytes: allocator, pushType: .alert, to: deviceToken)
-      print(res)
-      
-      try apns.close().wait()
-      try group.syncShutdownGracefully()
-      
-    } catch {
-      
-      print(error)
-      
+                 
     }
+    
   }
 }

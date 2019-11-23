@@ -13,6 +13,8 @@ struct PushEditorView: View {
   
   let id: String
   @Binding var editing: UIState.EditingPush
+  
+  var onRequestedSend: (UIState.EditingPush) -> Void
                    
   private var enviroment: String {
     editing.data.enviroment == .production ? "Production" : "Development"
@@ -49,7 +51,9 @@ struct PushEditorView: View {
       EditableTextView(text: $editing.data.payload)
         .font(Font.system(.body, design: .monospaced))
       
-      Button(action: {}) {
+      Button(action: {
+        self.onRequestedSend(self.editing)
+      }) {
         Text("Send")
       }
       

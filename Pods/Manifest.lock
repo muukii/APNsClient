@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   VergeStore:
-    :commit: d20da88ca71cabcda57ed3168aafb9dd7c9e9c88
+    :commit: 0907aae5ac6afd4f3f4504d2459b9b7637ff4ca8
     :git: "git@github.com:muukii/Verge"
 
 SPEC CHECKSUMS:

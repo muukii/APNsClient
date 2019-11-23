@@ -36,8 +36,16 @@ struct MainTabView: View {
         },
           set: { editing in
             self.uiDispatcher.updateEditingPush(editing)
-        })
-        )
+        }), onRequestedSend: { editing in
+          self.context.stack.service.send(
+            keyID: editing.data.keyID,
+            teamID: editing.data.teamID,
+            topic: editing.data.bundleID,
+            enviroment: .production,
+            payload: editing.data.payload,
+            deviceToken: editing.data.deviceToken
+          )
+      })
       )
     } else {
       return AnyView(Spacer())

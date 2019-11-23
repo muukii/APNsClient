@@ -25,6 +25,9 @@ struct EditableTextView: NSViewRepresentable {
   
   func updateNSView(_ view: CustomTextView, context: Context) {
     view.text = text
+    context.coordinator.onChangedText = { text in
+      self.text = text
+    }
     view.selectedRanges = context.coordinator.selectedRanges
     // How do I convert Font to NSFont?
     // view.font = context.environment.font.
@@ -49,6 +52,9 @@ struct EditorTextView_Previews: PreviewProvider {
 
 extension EditableTextView {
   final class Coordinator: NSObject, NSTextViewDelegate {
+    
+    var onChangedText: (String) -> Void = { _ in }
+    
     var parent: EditableTextView
     var selectedRanges: [NSValue] = []
     
@@ -70,7 +76,7 @@ extension EditableTextView {
         return
       }
       
-      self.parent.text = textView.string
+      onChangedText(textView.string)
       self.selectedRanges = textView.selectedRanges
     }
     
@@ -79,7 +85,7 @@ extension EditableTextView {
         return
       }
       
-      self.parent.text = textView.string
+      onChangedText(textView.string)
       self.parent.onCommit()
     }
   }
