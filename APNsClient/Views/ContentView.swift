@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+import Backend
+
 struct ContentView: View {
   
   let appContext: AppContext

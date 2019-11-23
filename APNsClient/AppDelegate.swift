@@ -9,6 +9,8 @@
 import Cocoa
 import SwiftUI
 
+import Backend
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
@@ -19,9 +21,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // Create the SwiftUI view that provides the window contents.
     
     let context = ApplicationContainer.makeContext()
+    let uiDispatcher = SessionUIDispatcher(sessionStateID: context.sessionStateID)
     
     let rootView = RootView(context: context)
       .environmentObject(ApplicationContainer.store)
+      .environmentObject(uiDispatcher)
         
     ProcessInfo.processInfo.disableAutomaticTermination("")
 

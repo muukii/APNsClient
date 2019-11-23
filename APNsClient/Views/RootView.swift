@@ -10,14 +10,21 @@ import Foundation
 
 import SwiftUI
 
+import Backend
+
 struct RootView: View {
   
   @EnvironmentObject var store: Store
+  @EnvironmentObject var uiDispatcher: SessionUIDispatcher
   
-  var context: AppContext
+  var sessionState: SessionState {
+    store.state.sessions[context.sessionStateID]!
+  }
+  
+  let context: AppContext
   
   var body: some View {
-    MainTabView()
+    MainTabView(context: context, sessionState: sessionState)
   }
 }
 

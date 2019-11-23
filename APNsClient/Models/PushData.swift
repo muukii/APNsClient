@@ -10,9 +10,9 @@ import Foundation
 
 struct PushData: Hashable {
   
-  enum Enviroment: Hashable {
-    case develpoment
-    case production
+  enum Enviroment: Int, Codable {
+    case development = 0
+    case production = 1
   }
   
   var bundleID: String
@@ -21,4 +21,14 @@ struct PushData: Hashable {
   var payload: String
   var deviceToken: String
   var enviroment: Enviroment
+}
+
+struct DraftPushData: Hashable, Codable {
+   
+  var bundleID: String = ""
+  var keyID: String = ""
+  var teamID: String = ""
+  var payload: String = ""
+  var deviceToken: String = ""
+  var enviroment: PushData.Enviroment = .development
 }

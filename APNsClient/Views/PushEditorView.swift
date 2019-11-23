@@ -10,43 +10,43 @@ import Foundation
 import SwiftUI
 
 struct PushEditorView: View {
-      
-  @State var bundleID: String = ""
-  @State var keyID: String = ""
-  @State var teamID: String = ""
-  @State var payload: String = ""
-  @State var deviceToken: String = ""
   
-  @State var isProduction: Bool = true
-  
+  let id: String
+  @Binding var editing: UIState.EditingPush
+                   
   private var enviroment: String {
-    isProduction ? "Production" : "Development"
+    editing.data.enviroment == .production ? "Production" : "Development"
   }
   
   var body: some View {
-    VStack {
+        
+    return VStack {
+      
+      Text(id)
          
       Group {
         
-        TextField("Bundle Identifier", text: $bundleID, onEditingChanged: { _ in }, onCommit: {})
+        TextField("Name", text: $editing.name, onEditingChanged: { _ in }, onCommit: {})
         
-        TextField("KeyID", text: $keyID, onEditingChanged: { _ in }, onCommit: {})
+        TextField("Bundle Identifier", text: $editing.data.bundleID, onEditingChanged: { _ in }, onCommit: {})
         
-        TextField("TeamID", text: $teamID, onEditingChanged: { _ in }, onCommit: {})
+        TextField("KeyID", text: $editing.data.keyID, onEditingChanged: { _ in }, onCommit: {})
         
-        TextField("Device Token", text: $deviceToken, onEditingChanged: { _ in }, onCommit: {})
+        TextField("TeamID", text: $editing.data.teamID, onEditingChanged: { _ in }, onCommit: {})
+        
+        TextField("Device Token", text: $editing.data.deviceToken, onEditingChanged: { _ in }, onCommit: {})
         
         MenuButton(label: Text(enviroment)) {
           Button(action: {
-            self.isProduction = true
+            self.editing.data.enviroment = .production
           }) { Text("Production") }
           Button(action: {
-            self.isProduction = false
+            self.editing.data.enviroment = .development
           }) { Text("Development") }
         }
       }
       
-      EditableTextView(text: $payload)
+      EditableTextView(text: $editing.data.payload)
         .font(Font.system(.body, design: .monospaced))
       
       Button(action: {}) {

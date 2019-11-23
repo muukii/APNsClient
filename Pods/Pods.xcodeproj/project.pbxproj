@@ -9,15 +9,18 @@
 /* Begin PBXBuildFile section */
 		4B3AE0CA54768E56CFB6DFEEDCD40989 /* VergeStore-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1678552CD5753EDE35948D9CCF967F57 /* VergeStore-dummy.m */; };
 		4CEA9FC514D0175DE2B30455C3CE0AF5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F940C819049CFF8741C0F5E3E075E607 /* Cocoa.framework */; };
+		80969BE656C5C9EEC117E72AD206556D /* Pods-APNsClient-Backend-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6B8959102F32A37F237E7F20448DE /* Pods-APNsClient-Backend-dummy.m */; };
 		8CB3D7BE1312BB40940A99F51F8B45A2 /* DefaultLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B72F42E7EC85AFC5113327D56250BBF /* DefaultLogger.swift */; };
+		8DD8CE82EAA8549AB24A696EF99F072B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F940C819049CFF8741C0F5E3E075E607 /* Cocoa.framework */; };
 		9B445525910DF809A9D04023486B9BCE /* VergeStore-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 375FAA6036D6ECB152421AF372A13882 /* VergeStore-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9CF21F2D843BD8D013AC335C564396BF /* SettingsTopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D012851F5F2761889D372C5B1D17B476 /* SettingsTopViewController.swift */; };
 		A1A03C78B10E414532D8366A51806F48 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BA1ED51561412DF67D84CB7FAB1A40 /* Utility.swift */; };
-		A1BB7123BF53C97BCDE62AB8699BB6EF /* Pods-APNsClient-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C3A72008C9CEC4A46278E30219EE8342 /* Pods-APNsClient-dummy.m */; };
+		A1BB7123BF53C97BCDE62AB8699BB6EF /* Pods-APNsClient-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A56F03B50B08E79DD4B2EEC102CE54 /* Pods-APNsClient-dummy.m */; };
 		AA2473B820A4513F955F916963BF6EC8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F940C819049CFF8741C0F5E3E075E607 /* Cocoa.framework */; };
-		CF0FDDF5E9FA32BF33F6E9168D58FAB8 /* Pods-APNsClient-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 997786CACB232F90D3729C0AAA8BA499 /* Pods-APNsClient-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CF0FDDF5E9FA32BF33F6E9168D58FAB8 /* Pods-APNsClient-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 24924C9A0DF68CE89F432E720FC70905 /* Pods-APNsClient-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CFC9F23F4D560AF237E7F9C2FF517998 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B607406CDD5DFF2015A2BD42FE8F8A9E /* Storage.swift */; };
 		D266725BD8489FBA1B34BA57DEB4700E /* DispatcherContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72804810B2427504F5393EE2B3E6CF8 /* DispatcherContext.swift */; };
+		D9A9452E7F1C3BCCEAD1C08C648FE46C /* Pods-APNsClient-Backend-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F4AC5F288CE93AA12FD38F5F1523C50 /* Pods-APNsClient-Backend-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E3707B66FAFBD2DBE67DC992B9F87C5B /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C39A2E1E65152EDFB7299221729F6D /* Dispatcher.swift */; };
 		F2C00528969324A463936E49C9343166 /* VergeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9616B11513BB381DAC629569C304BE /* VergeStore.swift */; };
 /* End PBXBuildFile section */
@@ -30,38 +33,62 @@
 			remoteGlobalIDString = D25AD7A76C74C9667D5EF83A0D85A5C6;
 			remoteInfo = VergeStore;
 		};
+		B39D0EBEFB46FB6108713BBD2C5C6FBB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D25AD7A76C74C9667D5EF83A0D85A5C6;
+			remoteInfo = VergeStore;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0EC22E0B484AC51D135ED3A2E8B0C622 /* Pods-APNsClient-Backend-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-APNsClient-Backend-acknowledgements.plist"; sourceTree = "<group>"; };
+		0F4AC5F288CE93AA12FD38F5F1523C50 /* Pods-APNsClient-Backend-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-APNsClient-Backend-umbrella.h"; sourceTree = "<group>"; };
 		1678552CD5753EDE35948D9CCF967F57 /* VergeStore-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "VergeStore-dummy.m"; sourceTree = "<group>"; };
+		1A6DED96E4D08F7B0AD081FE08175E8A /* Pods-APNsClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-APNsClient.release.xcconfig"; sourceTree = "<group>"; };
+		1FC15832F4662E15FAFDDE3DC90C87B5 /* Pods-APNsClient-Backend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-APNsClient-Backend.release.xcconfig"; sourceTree = "<group>"; };
+		24924C9A0DF68CE89F432E720FC70905 /* Pods-APNsClient-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-APNsClient-umbrella.h"; sourceTree = "<group>"; };
 		2946FF722ADA20B7559A264A7B6CD303 /* VergeStore-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VergeStore-prefix.pch"; sourceTree = "<group>"; };
 		2C66E332CBBC5AB6CD2C6819C3B563FE /* VergeStore.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = VergeStore.modulemap; sourceTree = "<group>"; };
-		36FE1D0F8A1A50A7DA7B1E886A22D93C /* Pods-APNsClient-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-APNsClient-frameworks.sh"; sourceTree = "<group>"; };
+		2E6ECA8EE240173690AFC39C14A56199 /* Pods-APNsClient-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-APNsClient-acknowledgements.plist"; sourceTree = "<group>"; };
 		375FAA6036D6ECB152421AF372A13882 /* VergeStore-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VergeStore-umbrella.h"; sourceTree = "<group>"; };
-		3A730653D83717B7D62D092561120563 /* Pods-APNsClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-APNsClient.debug.xcconfig"; sourceTree = "<group>"; };
 		42A4E5E09570A6F2D1AADB8AD1156094 /* Pods_APNsClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_APNsClient.framework; path = "Pods-APNsClient.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4307F51D430B3613A11A0B7C89F59882 /* Pods-APNsClient-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-APNsClient-Info.plist"; sourceTree = "<group>"; };
-		6FDF4683767654A9D49AB06C5820352C /* Pods-APNsClient-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-APNsClient-acknowledgements.plist"; sourceTree = "<group>"; };
+		504E847FE3BA0AA7B89AB83A869736BB /* Pods-APNsClient-Backend-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-APNsClient-Backend-Info.plist"; sourceTree = "<group>"; };
+		50A71DC13688FD220E2CCE1D0AF2A90B /* Pods-APNsClient-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-APNsClient-acknowledgements.markdown"; sourceTree = "<group>"; };
+		51CFB2D35D8A97468261B9C655F45635 /* Pods-APNsClient-Backend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-APNsClient-Backend.debug.xcconfig"; sourceTree = "<group>"; };
+		54EF0A36C8C8446BFB0589B010A6D5DB /* Pods-APNsClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-APNsClient.debug.xcconfig"; sourceTree = "<group>"; };
+		5A37D9E6B9BC8229C7B7C2B0A8377E12 /* Pods-APNsClient.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-APNsClient.modulemap"; sourceTree = "<group>"; };
+		60B3207070E158AD2BC03679F6719068 /* Pods-APNsClient-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-APNsClient-frameworks.sh"; sourceTree = "<group>"; };
 		7B72F42E7EC85AFC5113327D56250BBF /* DefaultLogger.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DefaultLogger.swift; path = Sources/VergeStore/DefaultLogger.swift; sourceTree = "<group>"; };
 		7D066D1E7AF5C31296FBD00D0718394E /* VergeStore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = VergeStore.xcconfig; sourceTree = "<group>"; };
 		86BA1ED51561412DF67D84CB7FAB1A40 /* Utility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Utility.swift; path = Sources/VergeStore/Utility.swift; sourceTree = "<group>"; };
-		997786CACB232F90D3729C0AAA8BA499 /* Pods-APNsClient-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-APNsClient-umbrella.h"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		A0C2DFF7FD238C9B15E756B5FD107DD3 /* Pods-APNsClient-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-APNsClient-acknowledgements.markdown"; sourceTree = "<group>"; };
+		A0EFDA5AC6333620513FEC42C01CF20F /* Pods-APNsClient-Backend-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-APNsClient-Backend-acknowledgements.markdown"; sourceTree = "<group>"; };
 		A5C39A2E1E65152EDFB7299221729F6D /* Dispatcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Dispatcher.swift; path = Sources/VergeStore/Dispatcher.swift; sourceTree = "<group>"; };
 		B607406CDD5DFF2015A2BD42FE8F8A9E /* Storage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Storage.swift; path = Sources/VergeStore/Storage.swift; sourceTree = "<group>"; };
-		C3A72008C9CEC4A46278E30219EE8342 /* Pods-APNsClient-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-APNsClient-dummy.m"; sourceTree = "<group>"; };
 		C72804810B2427504F5393EE2B3E6CF8 /* DispatcherContext.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DispatcherContext.swift; path = Sources/VergeStore/DispatcherContext.swift; sourceTree = "<group>"; };
 		CC16A5B59542323AB0D09DC4F0AF798B /* VergeStore-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "VergeStore-Info.plist"; sourceTree = "<group>"; };
 		D012851F5F2761889D372C5B1D17B476 /* SettingsTopViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SettingsTopViewController.swift; path = Sources/VergeStore/SettingsTopViewController.swift; sourceTree = "<group>"; };
-		DEA35E15384F0CDEC54F6DDCBED111A5 /* Pods-APNsClient.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-APNsClient.modulemap"; sourceTree = "<group>"; };
+		D8AECA099E66822923A38D28B6FC22CF /* Pods_APNsClient_Backend.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_APNsClient_Backend.framework; path = "Pods-APNsClient-Backend.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9B6B8959102F32A37F237E7F20448DE /* Pods-APNsClient-Backend-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-APNsClient-Backend-dummy.m"; sourceTree = "<group>"; };
+		DF80F4A655889CD9BE76890B835C78C3 /* Pods-APNsClient-Backend.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-APNsClient-Backend.modulemap"; sourceTree = "<group>"; };
+		E4A56F03B50B08E79DD4B2EEC102CE54 /* Pods-APNsClient-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-APNsClient-dummy.m"; sourceTree = "<group>"; };
+		E4B828C34CF5961138E553C2C0F0B961 /* Pods-APNsClient-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-APNsClient-Info.plist"; sourceTree = "<group>"; };
 		EB3E89F6F746070C0262305149CBCBA4 /* VergeStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = VergeStore.framework; path = VergeStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC9616B11513BB381DAC629569C304BE /* VergeStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VergeStore.swift; path = Sources/VergeStore/VergeStore.swift; sourceTree = "<group>"; };
-		F521EFD27DA3EEDE19D08C1684D29DE6 /* Pods-APNsClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-APNsClient.release.xcconfig"; sourceTree = "<group>"; };
 		F940C819049CFF8741C0F5E3E075E607 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		10B01D15F1FD53EF8FB0B99748FFBDC4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DD8CE82EAA8549AB24A696EF99F072B /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		73D14D94D2104ED767FA266293892C16 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -81,6 +108,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		034CBA0F31145D1F4EBD10A04D399E5A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				42A4E5E09570A6F2D1AADB8AD1156094 /* Pods_APNsClient.framework */,
+				D8AECA099E66822923A38D28B6FC22CF /* Pods_APNsClient_Backend.framework */,
+				EB3E89F6F746070C0262305149CBCBA4 /* VergeStore.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		1F54D8371CC423EB74CB987BDB5AEDE3 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +146,23 @@
 			name = Core;
 			sourceTree = "<group>";
 		};
+		37F285D2894ACF2167C6B19EBFD5BF95 /* Pods-APNsClient */ = {
+			isa = PBXGroup;
+			children = (
+				5A37D9E6B9BC8229C7B7C2B0A8377E12 /* Pods-APNsClient.modulemap */,
+				50A71DC13688FD220E2CCE1D0AF2A90B /* Pods-APNsClient-acknowledgements.markdown */,
+				2E6ECA8EE240173690AFC39C14A56199 /* Pods-APNsClient-acknowledgements.plist */,
+				E4A56F03B50B08E79DD4B2EEC102CE54 /* Pods-APNsClient-dummy.m */,
+				60B3207070E158AD2BC03679F6719068 /* Pods-APNsClient-frameworks.sh */,
+				E4B828C34CF5961138E553C2C0F0B961 /* Pods-APNsClient-Info.plist */,
+				24924C9A0DF68CE89F432E720FC70905 /* Pods-APNsClient-umbrella.h */,
+				54EF0A36C8C8446BFB0589B010A6D5DB /* Pods-APNsClient.debug.xcconfig */,
+				1A6DED96E4D08F7B0AD081FE08175E8A /* Pods-APNsClient.release.xcconfig */,
+			);
+			name = "Pods-APNsClient";
+			path = "Target Support Files/Pods-APNsClient";
+			sourceTree = "<group>";
+		};
 		3D54F261FB7CCA3E4C3CBD694F9D5D53 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -117,12 +171,29 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		69E18458F31A69A2DA7B909B4E250CFE /* Targets Support Files */ = {
+		48C0C027D6C216B64778E7FEE3E5F585 /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				E4C8172BCFD708BBC826AD14E1CAE308 /* Pods-APNsClient */,
+				37F285D2894ACF2167C6B19EBFD5BF95 /* Pods-APNsClient */,
+				732F15B102437AEEDA8E2348E0C1F118 /* Pods-APNsClient-Backend */,
 			);
 			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		732F15B102437AEEDA8E2348E0C1F118 /* Pods-APNsClient-Backend */ = {
+			isa = PBXGroup;
+			children = (
+				DF80F4A655889CD9BE76890B835C78C3 /* Pods-APNsClient-Backend.modulemap */,
+				A0EFDA5AC6333620513FEC42C01CF20F /* Pods-APNsClient-Backend-acknowledgements.markdown */,
+				0EC22E0B484AC51D135ED3A2E8B0C622 /* Pods-APNsClient-Backend-acknowledgements.plist */,
+				D9B6B8959102F32A37F237E7F20448DE /* Pods-APNsClient-Backend-dummy.m */,
+				504E847FE3BA0AA7B89AB83A869736BB /* Pods-APNsClient-Backend-Info.plist */,
+				0F4AC5F288CE93AA12FD38F5F1523C50 /* Pods-APNsClient-Backend-umbrella.h */,
+				51CFB2D35D8A97468261B9C655F45635 /* Pods-APNsClient-Backend.debug.xcconfig */,
+				1FC15832F4662E15FAFDDE3DC90C87B5 /* Pods-APNsClient-Backend.release.xcconfig */,
+			);
+			name = "Pods-APNsClient-Backend";
+			path = "Target Support Files/Pods-APNsClient-Backend";
 			sourceTree = "<group>";
 		};
 		86B7302D88E22A7BCE17CA05F1F26D41 /* VergeStore */ = {
@@ -133,15 +204,6 @@
 			);
 			name = VergeStore;
 			path = VergeStore;
-			sourceTree = "<group>";
-		};
-		A502F128DC150BB492F42BB577327AE5 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				42A4E5E09570A6F2D1AADB8AD1156094 /* Pods_APNsClient.framework */,
-				EB3E89F6F746070C0262305149CBCBA4 /* VergeStore.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		CBD43E0947D94E318A0ED1350CFF29ED /* OS X */ = {
@@ -158,8 +220,8 @@
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				E0A1E60606E0BF6E2E10F1F01350DFE8 /* Frameworks */,
 				3D54F261FB7CCA3E4C3CBD694F9D5D53 /* Pods */,
-				A502F128DC150BB492F42BB577327AE5 /* Products */,
-				69E18458F31A69A2DA7B909B4E250CFE /* Targets Support Files */,
+				034CBA0F31145D1F4EBD10A04D399E5A /* Products */,
+				48C0C027D6C216B64778E7FEE3E5F585 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
@@ -171,23 +233,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E4C8172BCFD708BBC826AD14E1CAE308 /* Pods-APNsClient */ = {
-			isa = PBXGroup;
-			children = (
-				DEA35E15384F0CDEC54F6DDCBED111A5 /* Pods-APNsClient.modulemap */,
-				A0C2DFF7FD238C9B15E756B5FD107DD3 /* Pods-APNsClient-acknowledgements.markdown */,
-				6FDF4683767654A9D49AB06C5820352C /* Pods-APNsClient-acknowledgements.plist */,
-				C3A72008C9CEC4A46278E30219EE8342 /* Pods-APNsClient-dummy.m */,
-				36FE1D0F8A1A50A7DA7B1E886A22D93C /* Pods-APNsClient-frameworks.sh */,
-				4307F51D430B3613A11A0B7C89F59882 /* Pods-APNsClient-Info.plist */,
-				997786CACB232F90D3729C0AAA8BA499 /* Pods-APNsClient-umbrella.h */,
-				3A730653D83717B7D62D092561120563 /* Pods-APNsClient.debug.xcconfig */,
-				F521EFD27DA3EEDE19D08C1684D29DE6 /* Pods-APNsClient.release.xcconfig */,
-			);
-			name = "Pods-APNsClient";
-			path = "Target Support Files/Pods-APNsClient";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -196,6 +241,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B445525910DF809A9D04023486B9BCE /* VergeStore-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		62311C145FFE9757338A7978A5B90AF7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9A9452E7F1C3BCCEAD1C08C648FE46C /* Pods-APNsClient-Backend-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,6 +280,25 @@
 			name = "Pods-APNsClient";
 			productName = "Pods-APNsClient";
 			productReference = 42A4E5E09570A6F2D1AADB8AD1156094 /* Pods_APNsClient.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		3D4148DFAABF624D2950356A625F1187 /* Pods-APNsClient-Backend */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 61A4FBD673C981DBC83D35E64F9C6499 /* Build configuration list for PBXNativeTarget "Pods-APNsClient-Backend" */;
+			buildPhases = (
+				62311C145FFE9757338A7978A5B90AF7 /* Headers */,
+				CE3D924AF62ED402BA8204C703D6EE84 /* Sources */,
+				10B01D15F1FD53EF8FB0B99748FFBDC4 /* Frameworks */,
+				C812A3B6A72C2FF0D6694CA035409010 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				561199E4841C1437AB060EA57B2D1F68 /* PBXTargetDependency */,
+			);
+			name = "Pods-APNsClient-Backend";
+			productName = "Pods-APNsClient-Backend";
+			productReference = D8AECA099E66822923A38D28B6FC22CF /* Pods_APNsClient_Backend.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		D25AD7A76C74C9667D5EF83A0D85A5C6 /* VergeStore */ = {
@@ -265,11 +337,12 @@
 				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = A502F128DC150BB492F42BB577327AE5 /* Products */;
+			productRefGroup = 034CBA0F31145D1F4EBD10A04D399E5A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				085D9DA865E637F9333977A547C42438 /* Pods-APNsClient */,
+				3D4148DFAABF624D2950356A625F1187 /* Pods-APNsClient-Backend */,
 				D25AD7A76C74C9667D5EF83A0D85A5C6 /* VergeStore */,
 			);
 		};
@@ -277,6 +350,13 @@
 
 /* Begin PBXResourcesBuildPhase section */
 		3ACDF191B90E5FB53776567DF57B6E26 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C812A3B6A72C2FF0D6694CA035409010 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -316,6 +396,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CE3D924AF62ED402BA8204C703D6EE84 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				80969BE656C5C9EEC117E72AD206556D /* Pods-APNsClient-Backend-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -324,6 +412,12 @@
 			name = VergeStore;
 			target = D25AD7A76C74C9667D5EF83A0D85A5C6 /* VergeStore */;
 			targetProxy = 94D8447FD5DE5BDFCB3A887805617F17 /* PBXContainerItemProxy */;
+		};
+		561199E4841C1437AB060EA57B2D1F68 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = VergeStore;
+			target = D25AD7A76C74C9667D5EF83A0D85A5C6 /* VergeStore */;
+			targetProxy = B39D0EBEFB46FB6108713BBD2C5C6FBB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -390,7 +484,7 @@
 		};
 		0F51A8515AC42E7F6EF97234A9BE5C71 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3A730653D83717B7D62D092561120563 /* Pods-APNsClient.debug.xcconfig */;
+			baseConfigurationReference = 54EF0A36C8C8446BFB0589B010A6D5DB /* Pods-APNsClient.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
@@ -427,6 +521,46 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
+		};
+		295C6E96A119D4106EF222D8F1368E55 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FC15832F4662E15FAFDDE3DC90C87B5 /* Pods-APNsClient-Backend.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "Target Support Files/Pods-APNsClient-Backend/Pods-APNsClient-Backend-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MODULEMAP_FILE = "Target Support Files/Pods-APNsClient-Backend/Pods-APNsClient-Backend.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 		4B8561F588E0F37E5A4721CFB7D4BDCE /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -530,9 +664,49 @@
 			};
 			name = Debug;
 		};
+		8D93E974DDA9655E05E5418D74611F8E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 51CFB2D35D8A97468261B9C655F45635 /* Pods-APNsClient-Backend.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "Target Support Files/Pods-APNsClient-Backend/Pods-APNsClient-Backend-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MODULEMAP_FILE = "Target Support Files/Pods-APNsClient-Backend/Pods-APNsClient-Backend.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		A96ABF63856A32A6B8FAA1A6ACFA6C0B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F521EFD27DA3EEDE19D08C1684D29DE6 /* Pods-APNsClient.release.xcconfig */;
+			baseConfigurationReference = 1A6DED96E4D08F7B0AD081FE08175E8A /* Pods-APNsClient.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
@@ -625,6 +799,15 @@
 			buildConfigurations = (
 				6DC6BBF7D2A721A4E91A75A28EEB8E83 /* Debug */,
 				0253CCDEE11BB2E876CF8C6EBDC6E1A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		61A4FBD673C981DBC83D35E64F9C6499 /* Build configuration list for PBXNativeTarget "Pods-APNsClient-Backend" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8D93E974DDA9655E05E5418D74611F8E /* Debug */,
+				295C6E96A119D4106EF222D8F1368E55 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

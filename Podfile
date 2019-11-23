@@ -8,4 +8,6 @@ target 'APNsClient' do
   pod 'VergeStore/Core', git: 'git@github.com:muukii/Verge', branch: 'store'
   # Pods for APNsClient
 
+  target 'Backend' do
+  end
 end
