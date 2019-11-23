@@ -17,7 +17,7 @@ struct RootView: View {
   var context: AppContext
   
   var body: some View {
-    ContentView(appContext: context)
+    MainTabView()
   }
 }
 

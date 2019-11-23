@@ -9,18 +9,41 @@
   },
   "social_media_url": "http://twitter.com/muukii_app",
   "platforms": {
-    "ios": "8.0",
+    "ios": "10.0",
     "osx": "10.13"
   },
   "source": {
     "git": "https://github.com/muukii/Verge.git",
     "tag": "6.0.0-alpha.1"
   },
-  "source_files": "VergeStore/**/*.swift",
   "homepage": "https://github.com/muukii/Verge",
   "weak_frameworks": [
     "Combine"
   ],
   "swift_versions": "5.1",
+  "subspecs": [
+    {
+      "name": "Core",
+      "source_files": "Sources/VergeStore/**/*.swift"
+    },
+    {
+      "name": "Rx",
+      "dependencies": {
+        "VergeStore/Core": [
+
+        ],
+        "RxSwift": [
+          "~> 5.0.0"
+        ],
+        "RxCocoa": [
+          "~> 5.0.0"
+        ],
+        "RxRelay": [
+          "~> 5.0.0"
+        ]
+      },
+      "source_files": "Sources/RxVergeStore/**/*.swift"
+    }
+  ],
   "swift_version": "5.1"
 }

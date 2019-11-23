@@ -21,8 +21,9 @@
 
 
 import Foundation
+import os
 
-struct StorageSubscribeToken : Hashable {
+public struct StorageSubscribeToken : Hashable {
   private let identifier = UUID().uuidString
 }
 
@@ -40,52 +41,65 @@ public final class Storage<Value>: CustomReflectable {
   }
   
   public var value: Value {
-    lock.lock()
+    os_unfair_lock_lock(&unfairLock)
     defer {
-      lock.unlock()
+      os_unfair_lock_unlock(&unfairLock)
     }
     return nonatomicValue
   }
   
   private var nonatomicValue: Value
   
-  private let lock = NSLock()
+  private var unfairLock = os_unfair_lock_s()
   
-  init(_ value: Value) {
+  public init(_ value: Value) {
     self.nonatomicValue = value
   }
   
-  func update(_ update: (inout Value) throws -> Void) rethrows {
-    lock.lock()
+  public func update(_ update: (inout Value) throws -> Void) rethrows {
+    os_unfair_lock_lock(&unfairLock)
     do {
       try update(&nonatomicValue)
+      let notifyValue = nonatomicValue
+      os_unfair_lock_unlock(&unfairLock)
+      notify(value: notifyValue)
     } catch {
-      lock.unlock()
+      os_unfair_lock_unlock(&unfairLock)
       throw error
     }
-    lock.unlock()
-    notify(value: nonatomicValue)
   }
   
+  public func replace(_ value: Value) {
+    os_unfair_lock_lock(&unfairLock)
+    nonatomicValue = value
+    let notifyValue = nonatomicValue
+    os_unfair_lock_unlock(&unfairLock)
+    notify(value: notifyValue)
+  }
   
   @discardableResult
-  func add(subscriber: @escaping (Value) -> Void) -> StorageSubscribeToken {
-    lock.lock(); defer { lock.unlock() }
+  public func add(subscriber: @escaping (Value) -> Void) -> StorageSubscribeToken {
+    os_unfair_lock_lock(&unfairLock)
+    defer { os_unfair_lock_unlock(&unfairLock) }
+    
     let token = StorageSubscribeToken()
     subscribers[token] = subscriber
     return token
   }
   
-  func remove(subscriber: StorageSubscribeToken) {
-    lock.lock(); defer { lock.unlock() }
+  public func remove(subscriber: StorageSubscribeToken) {
+    os_unfair_lock_lock(&unfairLock)
+    defer { os_unfair_lock_unlock(&unfairLock) }
+    
     subscribers.removeValue(forKey: subscriber)
   }
   
   @inline(__always)
   fileprivate func notify(value: Value) {
-    lock.lock()
+    os_unfair_lock_lock(&unfairLock)
     let subscribers: [StorageSubscribeToken : (Value) -> Void] = self.subscribers
-    lock.unlock()
+    os_unfair_lock_unlock(&unfairLock)
+    
     subscribers.forEach { $0.value(value) }
   }
   

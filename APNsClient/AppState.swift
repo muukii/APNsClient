@@ -27,6 +27,6 @@ struct SessionState: Identifiable {
 
 final class Store: VergeDefaultStore<AppState> {
   init() {
-    super.init(initialState: .init(), logger: nil)
+    super.init(initialState: .init(), logger: DefaultLogger.shared)
   }
 }
