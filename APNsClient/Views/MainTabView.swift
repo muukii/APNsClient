@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 import Backend
 
@@ -17,12 +18,24 @@ struct MainTabView: View {
   @EnvironmentObject var uiDispatcher: SessionUIDispatcher
   
   @State var selected: UIState.EditingPush.ID?
+  @State private var subscriptions = Set<AnyCancellable>()
   
-  let context: AppContext  
+  let context: AppContext
   let sessionState: SessionState
   
   private var uiState: UIState {
     sessionState.ui
+  }
+  
+  private func send(_ editing: UIState.EditingPush) {
+    self.context.stack.service.send(
+      keyID: editing.data.keyID,
+      teamID: editing.data.teamID,
+      topic: editing.data.bundleID,
+      enviroment: editing.data.enviroment.asAPN,
+      payload: editing.data.payload,
+      deviceToken: editing.data.deviceToken
+    )
   }
     
   private func currentEditor() -> AnyView {
@@ -37,14 +50,12 @@ struct MainTabView: View {
           set: { editing in
             self.uiDispatcher.updateEditingPush(editing)
         }), onRequestedSend: { editing in
-          self.context.stack.service.send(
-            keyID: editing.data.keyID,
-            teamID: editing.data.teamID,
-            topic: editing.data.bundleID,
-            enviroment: .production,
-            payload: editing.data.payload,
-            deviceToken: editing.data.deviceToken
-          )
+          self.send(editing)
+      }, onRequestedDelete: { editing in
+        if self.selected == editing.id {
+          self.selected = nil
+        }
+        self.uiDispatcher.deleteEditingPush(editing)
       })
       )
     } else {

@@ -15,6 +15,7 @@ struct PushEditorView: View {
   @Binding var editing: UIState.EditingPush
   
   var onRequestedSend: (UIState.EditingPush) -> Void
+  var onRequestedDelete: (UIState.EditingPush) -> Void
                    
   private var enviroment: String {
     editing.data.enviroment == .production ? "Production" : "Development"
@@ -22,10 +23,14 @@ struct PushEditorView: View {
   
   var body: some View {
         
-    return VStack {
+    VStack {
       
-      Text(id)
-         
+      Button(action: {
+        self.onRequestedDelete(self.editing)
+      }) {
+        Text("Delete")
+      }
+               
       Group {
         
         TextField("Name", text: $editing.name, onEditingChanged: { _ in }, onCommit: {})
@@ -43,7 +48,7 @@ struct PushEditorView: View {
             self.editing.data.enviroment = .production
           }) { Text("Production") }
           Button(action: {
-            self.editing.data.enviroment = .development
+            self.editing.data.enviroment = .sandbox
           }) { Text("Development") }
         }
       }

@@ -8,6 +8,7 @@
 
 import Foundation
 
+import Combine
 import VergeStore
 
 import Backend
@@ -53,6 +54,8 @@ extension SessionState {
 
 final class SessionUIDispatcher: Dispatcher<AppState>, ScopedDispatching {
   
+  typealias Scoped = SessionState
+  
   public let selector: WritableKeyPath<SessionService.State, SessionState>
   
   private let queue = DispatchQueue(label: "save")
@@ -69,7 +72,7 @@ final class SessionUIDispatcher: Dispatcher<AppState>, ScopedDispatching {
     }
     
     // TODO: Temp
-    dispatch { c in
+    dispatch { c -> Void in
       queue.async {
         if let data = UserDefaults.standard.data(forKey: "editing") {
           
@@ -90,14 +93,32 @@ final class SessionUIDispatcher: Dispatcher<AppState>, ScopedDispatching {
       $0.ui.editing.editingPushIDs.append(push.id)
     }
     
+    saveCurrentEditing()
+    
   }
   
   func updateEditingPush(_ editingPush: UIState.EditingPush) {
         
-    commitScoped {
-      $0.ui.editing.editingPushesTable[editingPush.id] = editingPush
+    commitScoped { s in
+      s.ui.editing.editingPushesTable[editingPush.id] = editingPush
     }
     
+    saveCurrentEditing()
+           
+  }
+  
+  func deleteEditingPush(_ editingPush: UIState.EditingPush) {
+        
+    commitScoped { s in
+      s.ui.editing.editingPushesTable.removeValue(forKey: editingPush.id)
+      s.ui.editing.editingPushIDs.removeAll { $0 == editingPush.id }
+    }
+    
+    saveCurrentEditing()
+    
+  }
+  
+  private func saveCurrentEditing() {
     dispatch { c in
       
       // TODO: Temp
@@ -109,8 +130,6 @@ final class SessionUIDispatcher: Dispatcher<AppState>, ScopedDispatching {
         
       }
     }
-        
-   
   }
   
 }
