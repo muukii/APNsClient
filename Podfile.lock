@@ -11,11 +11,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   VergeStore:
-    :commit: 0907aae5ac6afd4f3f4504d2459b9b7637ff4ca8
+    :commit: cdbb4d386ef4d5ee70bcd68f7c2cda69154447ff
     :git: "git@github.com:muukii/Verge"
 
 SPEC CHECKSUMS:
-  VergeStore: 0fcad73c79426167dc2c6f10286a27cb0acd7219
+  VergeStore: e434facf5076298372555075afa66ba302b8de09
 
 PODFILE CHECKSUM: dacde4a7ac1f543c49d722c31ed8dea1ecbb463f
 
