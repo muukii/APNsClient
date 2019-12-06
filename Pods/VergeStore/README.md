@@ -1,12 +1,22 @@
 # Verge - Store (SwiftUI / UIKit) (Planning v6.0.0)
 
-Latest released Verge => [`master` branch](https://github.com/muukii/Verge/tree/master)
+Classic Version is here => [Verge Classic](./Sources/VergeClassic)
 
 <img src="loop@2x.png" width=646/>
 
 ## Gallary
 
 - [APNsClient](https://github.com/muukii/APNsClient) : A desktop application to send a apns push with HTTP/2 based API.
+
+## Installation VergeStore
+
+Currently it supports only CocoaPods.
+
+In Podfile
+
+```
+pod 'VergeStore/Core'
+```
 
 ## Concept
 
@@ -76,8 +86,11 @@ Mutation object is simple struct that has a closure what passes current state to
 
 ```swift
 class MyDispatcher: Dispatcher<RootState> {
+}
+
+extension Mutations where Base == MyDispatcher {
   func addNewTodo(title: String) {
-    commit { (state: inout RootState) in
+    descriptor.commit { (state: inout RootState) in
       state.todos.append(Todo(title: title, hasCompleted: false))
     }
   }
@@ -86,7 +99,7 @@ class MyDispatcher: Dispatcher<RootState> {
 let store = MyStore()
 let dispatcher = MyDispatcher(target: store)
 
-dispatcher.addNewTodo(title: "Create SwiftUI App")
+dispatcher.commit.addNewTodo(title: "Create SwiftUI App")
 
 print(store.state.todos)
 // store.state.todos => [Todo(title: "Create SwiftUI App", hasCompleted: false)]
@@ -103,10 +116,13 @@ To commit Mutations inside Action, Use context.commit.
 
 ```swift
 class MyDispatcher: Dispatcher<RootState> {
+}
+
+extension Actions where Base == MyDispatcher {
 
   @discardableResult
   func fetchRemoteTodos() -> Future<Void> {
-    dispatch { context in
+    descriptor.dispatch { context in
 
       return Future<[Todo], Never> { ... }
         .sink { todos in
@@ -125,7 +141,7 @@ class MyDispatcher: Dispatcher<RootState> {
 let store = MyStore()
 let dispatcher = MyDispatcher(target: store)
 
-dispatcher.fetchRemoteTodos()
+dispatcher.dispatch.fetchRemoteTodos()
 
 // After Future completed
 
@@ -154,11 +170,11 @@ public protocol StateType {
 
 extension StateType {
 
-    public mutating func update<T>(target keyPath: WritableKeyPath<Self, T>, update: (inout T.Wrapped) throws -> Void) rethrows where T : VergeStore._VergeStore_OptionalProtocol
+  public mutating func update<T>(target keyPath: WritableKeyPath<Self, T>, update: (inout T.Wrapped) throws -> Void) rethrows where T : VergeStore._VergeStore_OptionalProtocol
 
-    public mutating func update<T>(target keyPath: WritableKeyPath<Self, T>, update: (inout T) throws -> Void) rethrows
+  public mutating func update<T>(target keyPath: WritableKeyPath<Self, T>, update: (inout T) throws -> Void) rethrows
 
-    public mutating func update(update: (inout Self) throws -> Void) rethrows
+  public mutating func update(update: (inout Self) throws -> Void) rethrows
 }
 ```
 
@@ -212,8 +228,12 @@ final class OptionalNestedDispatcher: Store.DispatcherType, ScopedDispatching {
     \.optionalNested
   }
 
+}
+
+extension Mutations where Base == OptionalNestedDispatcher {
+
   func setMyName() {
-    commitIfPresent {
+    descriptor.commitIfPresent {
       $0.myName = "Hello"
     }
   }
@@ -240,25 +260,45 @@ As a default implementation, we can use `DefaultLogger.shared`.
 
 ```swift
 public protocol VergeStoreLogger {
-  
+
   func willCommit(store: AnyObject, state: Any, mutation: MutationMetadata, context: AnyObject?)
   func didCommit(store: AnyObject, state: Any, mutation: MutationMetadata, context: AnyObject?, time: CFTimeInterval)
   func didDispatch(store: AnyObject, state: Any, action: ActionMetadata, context: AnyObject?)
-  
+
   func didCreateDispatcher(store: AnyObject, dispatcher: Any)
   func didDestroyDispatcher(store: AnyObject, dispatcher: Any)
 }
 ```
 
-### Rx Extensions
+## Rx Extensions
 
 VergeStore provides RxSwift extensions.<br>
 It may help using VergeStore in UIKit based application.
 
 We can add this with following pod'
 
+### Installation VergeStore/Rx
+
 ```ruby
 pod 'VergeStore/Rx'
+```
+
+## VergeViewModel module
+
+We have a sub-framework VergeViewModel.<br>
+This helps UIKit based application.
+
+VergeStore is a state container and that state will be bigger according to the application scale.<br>
+You would need something that map to view-state.
+
+In SwiftUI, `SwiftUI.View` is that. But UIKit is not.
+
+It may be a better way to get ViewModel or something.
+
+### Installation VergeStore/VM
+
+```ruby
+pod 'VergeStore/VM'
 ```
 
 ## References
@@ -266,16 +306,6 @@ pod 'VergeStore/Rx'
 ## Normalized State Shape
 
 [https://redux.js.org/recipes/structuring-reducers/normalizing-state-shape](https://redux.js.org/recipes/structuring-reducers/normalizing-state-shape)
-
-## Installation
-
-Currently it supports only CocoaPods.
-
-In Podfile
-
-```
-pod 'VergeStore'
-```
 
 ## Author
 

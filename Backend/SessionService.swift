@@ -18,18 +18,21 @@ public typealias APNEnvironment = APNSwiftConfiguration.Environment
 
 public final class SessionService: Dispatcher<AppState>, ScopedDispatching {
   
-  public let selector: WritableKeyPath<SessionService.State, SessionState>
+  public let scopedStateKeyPath: WritableKeyPath<AppState, SessionState>
   
-  private let queue: DispatchQueue = .init(label: "push")
+  fileprivate let queue: DispatchQueue = .init(label: "push")
   
   init(sessionStateID: String) {
-    self.selector = \AppState.sessions[sessionStateID]!
+    self.scopedStateKeyPath = \AppState.sessions[sessionStateID]!
     super.init(target: ApplicationContainer.store)
   }
   
+}
+
+extension Mutations where Base : SessionService {
   public func globalIncrement() {
     
-    commit {
+    descriptor.commit {
       $0.count += 1
     }
     
@@ -37,17 +40,21 @@ public final class SessionService: Dispatcher<AppState>, ScopedDispatching {
   
   public func increment() {
     
-    commitScoped {
+    descriptor.commitScoped {
       $0.count += 1
     }
     
   }
   
   public func setP8FileURL(_ url: URL) {
-    commitScoped {
+    descriptor.commitScoped {
       $0.p8FileURL = url
     }
   }
+  
+}
+
+extension Actions where Base : SessionService {
   
   @discardableResult
   public func send(
@@ -59,10 +66,10 @@ public final class SessionService: Dispatcher<AppState>, ScopedDispatching {
     deviceToken: String
   ) -> Future<Void, Error> {
     
-    dispatch { (c) in
+    descriptor.dispatch { (c) in
       
       Future<Void, Error>.init { (promise) in
-        self.queue.async {
+        self.base.queue.async {
           guard let url = c.scopedState.p8FileURL else { return }
           do {
             
@@ -83,11 +90,12 @@ public final class SessionService: Dispatcher<AppState>, ScopedDispatching {
             allocator.writeBytes(Array(payload.utf8))
             
             let res = apns.send(rawBytes: allocator, pushType: .alert, to: deviceToken)
-            print(res)
             
             try apns.close().wait()
             try group.syncShutdownGracefully()
             
+            print(res)
+          
             promise(.success(()))
             
           } catch {

@@ -28,7 +28,7 @@ struct MainTabView: View {
   }
   
   private func send(_ editing: UIState.EditingPush) {
-    self.context.stack.service.send(
+    self.context.stack.service.dispatch.send(
       keyID: editing.data.keyID,
       teamID: editing.data.teamID,
       topic: editing.data.bundleID,
@@ -48,14 +48,14 @@ struct MainTabView: View {
             self.uiState.editingPush(by: id)!
         },
           set: { editing in
-            self.uiDispatcher.updateEditingPush(editing)
+            self.uiDispatcher.dispatch.updateEditingPush(editing)
         }), onRequestedSend: { editing in
           self.send(editing)
       }, onRequestedDelete: { editing in
         if self.selected == editing.id {
           self.selected = nil
         }
-        self.uiDispatcher.deleteEditingPush(editing)
+        self.uiDispatcher.dispatch.deleteEditingPush(editing)
       })
       )
     } else {
@@ -70,7 +70,7 @@ struct MainTabView: View {
       panel.begin { (response) in
         guard response == .OK else { return }
         let url = panel.urls.first!
-        self.context.stack.service.setP8FileURL(url)
+        self.context.stack.service.commit.setP8FileURL(url)
       }
     }) {
       Text("Select p8 file")
@@ -79,7 +79,7 @@ struct MainTabView: View {
   
   private func newTabView() -> some View {
     Button(action: {
-      self.uiDispatcher.addTab()
+      self.uiDispatcher.dispatch.addTab()
     }) {
       Text("New Push")
     }

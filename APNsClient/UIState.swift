@@ -56,80 +56,116 @@ final class SessionUIDispatcher: Dispatcher<AppState>, ScopedDispatching {
   
   typealias Scoped = SessionState
   
-  public let selector: WritableKeyPath<SessionService.State, SessionState>
+  public let scopedStateKeyPath: WritableKeyPath<SessionService.State, SessionState>
   
-  private let queue = DispatchQueue(label: "save")
-  private let encoder = JSONEncoder()
-  private let decoder = JSONDecoder()
+  fileprivate let queue = DispatchQueue(label: "save")
+  fileprivate let encoder = JSONEncoder()
+  fileprivate let decoder = JSONDecoder()
   
   init(sessionStateID: String) {
-    self.selector = \AppState.sessions[sessionStateID]!
+    self.scopedStateKeyPath = \AppState.sessions[sessionStateID]!
     super.init(target: ApplicationContainer.store)
-    commitScoped {
+    
+    dispatch.restoreState()
+  }
+      
+}
+
+extension Mutations where Base : SessionUIDispatcher {
+  
+  func setInitialState() {
+    descriptor.commitScoped {
       if $0._ui == nil {
         $0.ui = .init()
       }
     }
+  }
+  
+  fileprivate func addTab() {
+        
+    descriptor.commitScoped {
+      let push = UIState.EditingPush(name: "Untitled")
+      $0.ui.editing.editingPushesTable[push.id] = push
+      $0.ui.editing.editingPushIDs.append(push.id)
+    }
+            
+  }
+  
+  fileprivate func updateEditingPush(_ editingPush: UIState.EditingPush) {
     
-    // TODO: Temp
-    dispatch { c -> Void in
-      queue.async {
+    descriptor.commitScoped { s in
+      s.ui.editing.editingPushesTable[editingPush.id] = editingPush
+    }
+  }
+  
+  fileprivate func deleteEditingPush(_ editingPush: UIState.EditingPush) {
+    descriptor.commitScoped { s in
+      s.ui.editing.editingPushesTable.removeValue(forKey: editingPush.id)
+      s.ui.editing.editingPushIDs.removeAll { $0 == editingPush.id }
+    }
+  }
+  
+  fileprivate func updateUIEditing(_ editing: UIState.Editing) {
+    descriptor.commitScoped {
+      $0.ui.editing = editing
+    }
+  }
+}
+
+extension Actions where Base : SessionUIDispatcher {
+  
+  func addTab() {
+    
+    descriptor.dispatch { c in
+      c.commit.addTab()
+      c.dispatch.saveCurrentEditing()
+    }
+    
+  }
+  
+  func updateEditingPush(_ editingPush: UIState.EditingPush) {
+    
+    descriptor.dispatch { c in
+      c.commit.updateEditingPush(editingPush)
+      c.dispatch.saveCurrentEditing()
+    }
+              
+  }
+  
+  func deleteEditingPush(_ editingPush: UIState.EditingPush) {
+    
+    descriptor.dispatch { c in
+      c.commit.deleteEditingPush(editingPush)
+      c.dispatch.saveCurrentEditing()
+    }
+    
+  }
+  
+  func restoreState() {
+    // TODO: For now we use very bad performance code,
+    descriptor.dispatch { c -> Void in
+      c.commit.setInitialState()
+      base.queue.async {
         if let data = UserDefaults.standard.data(forKey: "editing") {
           
-          let editing = try! self.decoder.decode(UIState.Editing.self, from: data)
-          c.commitScoped {
-            $0.ui.editing = editing
-          }
+          let editing = try! self.base.decoder.decode(UIState.Editing.self, from: data)
+          c.commit.updateUIEditing(editing)
         }
       }
     }
   }
   
-  func addTab() {
-    
-    commitScoped {
-      let push = UIState.EditingPush(name: "Untitled")
-      $0.ui.editing.editingPushesTable[push.id] = push
-      $0.ui.editing.editingPushIDs.append(push.id)
-    }
-    
-    saveCurrentEditing()
-    
-  }
-  
-  func updateEditingPush(_ editingPush: UIState.EditingPush) {
-        
-    commitScoped { s in
-      s.ui.editing.editingPushesTable[editingPush.id] = editingPush
-    }
-    
-    saveCurrentEditing()
-           
-  }
-  
-  func deleteEditingPush(_ editingPush: UIState.EditingPush) {
-        
-    commitScoped { s in
-      s.ui.editing.editingPushesTable.removeValue(forKey: editingPush.id)
-      s.ui.editing.editingPushIDs.removeAll { $0 == editingPush.id }
-    }
-    
-    saveCurrentEditing()
-    
-  }
-  
   private func saveCurrentEditing() {
-    dispatch { c in
+    descriptor.dispatch { c in
       
-      // TODO: Temp
-      queue.async {
+      // TODO: For now we use very bad performance code,      
+      base.queue.async {
         
-        let data = try! self.encoder.encode(c.scopedState.ui.editing)
+        let data = try! self.base.encoder.encode(c.scopedState.ui.editing)
         
         UserDefaults.standard.set(data, forKey: "editing")
         
       }
     }
   }
-  
 }
