@@ -1,6 +1,0 @@
-framework module VergeStore {
-  umbrella header "VergeStore-umbrella.h"
-
-  export *
-  module * { export * }
-}

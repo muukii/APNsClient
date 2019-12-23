@@ -10,15 +10,15 @@ import Foundation
 
 import Combine
 
-import VergeStore
+import Verge
 import APNSwift
 import NIO
 
 public typealias APNEnvironment = APNSwiftConfiguration.Environment
 
-public final class SessionService: Dispatcher<AppState>, ScopedDispatching {
-  
-  public let scopedStateKeyPath: WritableKeyPath<AppState, SessionState>
+public final class SessionService: Store.Dispatcher, ScopedDispatching {
+      
+  public static let scopedStateKeyPath: WritableKeyPath<AppState, SessionState>
   
   fileprivate let queue: DispatchQueue = .init(label: "push")
   

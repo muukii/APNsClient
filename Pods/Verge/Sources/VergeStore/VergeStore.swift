@@ -21,15 +21,19 @@
 
 import Foundation
 
+#if !COCOAPODS
+import VergeCore
+#endif
+
 /// A metadata object that indicates the name of the mutation and where it was caused.
 public struct MutationMetadata {
   
-  public let name: String
+  public let name: StaticString
   public let file: StaticString
   public let function: StaticString
   public let line: UInt
   
-  public init(name: String, file: StaticString, function: StaticString, line: UInt) {
+  public init(name: StaticString, file: StaticString, function: StaticString, line: UInt) {
     self.name = name
     self.file = file
     self.function = function
@@ -40,12 +44,12 @@ public struct MutationMetadata {
 /// A metadata object that indicates the name of the action and where it was caused.
 public struct ActionMetadata {
   
-  public let name: String
+  public let name: StaticString
   public let file: StaticString
   public let function: StaticString
   public let line: UInt
   
-  public init(name: String, file: StaticString, function: StaticString, line: UInt) {
+  public init(name: StaticString, file: StaticString, function: StaticString, line: UInt) {
     self.name = name
     self.file = file
     self.function = function
@@ -56,13 +60,20 @@ public struct ActionMetadata {
 /// A protocol to register logger and get the event VergeStore emits.
 public protocol VergeStoreLogger {
   
-  func willCommit(store: AnyObject, state: Any, mutation: MutationMetadata, context: Any?)
-  func didCommit(store: AnyObject, state: Any, mutation: MutationMetadata, context: Any?, time: CFTimeInterval)
+  func willCommit(store: AnyObject, state: Any, mutation: MutationBaseType, context: Any?)
+  func didCommit(store: AnyObject, state: Any, mutation: MutationBaseType, context: Any?, time: CFTimeInterval)
   func didDispatch(store: AnyObject, state: Any, action: ActionMetadata, context: Any?)
   
   func didCreateDispatcher(store: AnyObject, dispatcher: Any)
   func didDestroyDispatcher(store: AnyObject, dispatcher: Any)
 }
+
+public protocol VergeStoreType: AnyObject {
+  associatedtype State
+  associatedtype Activity  
+}
+
+public typealias NoActivityStoreBase<State> = StoreBase<State, Never>
 
 /// A base object to create store.
 /// You may create subclass of VergeDefaultStore
@@ -73,18 +84,21 @@ public protocol VergeStoreLogger {
 ///   }
 /// }
 /// ```
-open class VergeDefaultStore<State>: CustomReflectable {
+open class StoreBase<State, Activity>: CustomReflectable, VergeStoreType, ValueContainerType {
   
-  public typealias DispatcherType = Dispatcher<State>
+  public typealias Dispatcher = DispatcherBase<State, Activity>
   
+  public typealias Value = State
+    
   /// A current state.
   public var state: State {
-    backingStorage.value
+    _backingStorage.value
   }
 
   /// A backing storage that manages current state.
   /// You shouldn't access this directly unless special case.
-  public let backingStorage: Storage<State>
+  public let _backingStorage: Storage<State>
+  public let _eventEmitter: EventEmitter<Activity> = .init()
   
   public private(set) var logger: VergeStoreLogger?
     
@@ -97,35 +111,42 @@ open class VergeDefaultStore<State>: CustomReflectable {
     logger: VergeStoreLogger?
   ) {
     
-    self.backingStorage = .init(initialState)
+    self._backingStorage = .init(initialState)
     self.logger = logger
     
   }
   
   @inline(__always)
-  func receive<FromDispatcher: Dispatching>(
-    context: VergeStoreDispatcherContext<FromDispatcher>?,
-    metadata: MutationMetadata,
-    mutation: (inout State) throws -> Void
-  ) rethrows {
+  func _receive<FromDispatcher: DispatcherType, Mutation: MutationType>(
+    context: DispatcherContext<FromDispatcher>?,
+    mutation: Mutation
+  ) -> Mutation.Result where FromDispatcher.State == State, Mutation.State == State {
     
-    logger?.willCommit(store: self, state: self.state, mutation: metadata, context: context)
+    logger?.willCommit(store: self, state: self.state, mutation: mutation, context: context)
     
     let startedTime = CFAbsoluteTimeGetCurrent()
-    let result = try backingStorage.update { (state) in
-      try mutation(&state)
+    var currentState: State!
+    let returnValue = _backingStorage.update { (state) -> Mutation.Result in
+      let r = mutation.mutate(state: &state)
+      currentState = state
+      return r
     }
     let elapsed = CFAbsoluteTimeGetCurrent() - startedTime
     
-    logger?.didCommit(store: self, state: result, mutation: metadata, context: context, time: elapsed)
-           
+    logger?.didCommit(store: self, state: currentState!, mutation: mutation, context: context, time: elapsed)
+    return returnValue
   }
   
+  @inline(__always)
+  func _send(activity: Activity) {
+    
+    _eventEmitter.accept(activity)
+  }
+     
   public var customMirror: Mirror {
-    Mirror(
+    return Mirror(
       self,
       children: [
-        "state": state
       ],
       displayStyle: .struct
     )
@@ -138,19 +159,20 @@ open class VergeDefaultStore<State>: CustomReflectable {
 import Foundation
 import Combine
 
-private var _associated: Void?
+fileprivate var _willChangeAssociated: Void?
+fileprivate var _didChangeAssociated: Void?
 
 @available(iOS 13.0, macOS 10.15, *)
 extension Storage: ObservableObject {
   
   public var objectWillChange: ObservableObjectPublisher {
-    if let associated = objc_getAssociatedObject(self, &_associated) as? ObservableObjectPublisher {
+    if let associated = objc_getAssociatedObject(self, &_willChangeAssociated) as? ObservableObjectPublisher {
       return associated
     } else {
       let associated = ObservableObjectPublisher()
-      objc_setAssociatedObject(self, &_associated, associated, .OBJC_ASSOCIATION_RETAIN)
+      objc_setAssociatedObject(self, &_willChangeAssociated, associated, .OBJC_ASSOCIATION_RETAIN)
       
-      addWillUpdate { _ in
+      addWillUpdate {
         if Thread.isMainThread {
           associated.send()
         } else {
@@ -166,11 +188,11 @@ extension Storage: ObservableObject {
   
   public var didChangePublisher: AnyPublisher<Value, Never> {
     
-    if let associated = objc_getAssociatedObject(self, &_associated) as? PassthroughSubject<Value, Never> {
+    if let associated = objc_getAssociatedObject(self, &_didChangeAssociated) as? PassthroughSubject<Value, Never> {
       return associated.eraseToAnyPublisher()
     } else {
       let associated = PassthroughSubject<Value, Never>()
-      objc_setAssociatedObject(self, &_associated, associated, .OBJC_ASSOCIATION_RETAIN)
+      objc_setAssociatedObject(self, &_didChangeAssociated, associated, .OBJC_ASSOCIATION_RETAIN)
       
       addDidUpdate { s in
         if Thread.isMainThread {
@@ -189,18 +211,29 @@ extension Storage: ObservableObject {
 }
 
 @available(iOS 13.0, macOS 10.15, *)
-extension VergeDefaultStore: ObservableObject {
+extension StoreBase: ObservableObject {
+  
+  /// A Publisher to compatible SwiftUI
   public var objectWillChange: ObservableObjectPublisher {
-    backingStorage.objectWillChange
+    _backingStorage.objectWillChange
   }
+    
+}
+
+@available(iOS 13.0, macOS 10.15, *)
+extension StoreBase {
   
   public var didChangePublisher: AnyPublisher<State, Never> {
-    backingStorage.didChangePublisher
+    _backingStorage.didChangePublisher
+  }
+  
+  public var activityPublisher: EventEmitter<Activity>.Publisher {
+    _eventEmitter.publisher
   }
 }
 
 @available(iOS 13.0, macOS 10.15, *)
-extension Dispatcher: ObservableObject {
+extension DispatcherBase: ObservableObject {
 
 }
 

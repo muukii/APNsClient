@@ -7,121 +7,128 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		148A4B99FFE056C3F4AC55AA637414CB /* VergeStore-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6275A552B4DD31889A1118D4B8097277 /* VergeStore-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		409014F1130833F5E0ECEBF658FD3D0F /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C61CCF488D8C48B7C5DDF765B4614E6 /* Dispatcher.swift */; };
-		482353D7424415F7D998677948EEEB1F /* DefaultLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FD348C9E06AB57064F9EBF646716AC /* DefaultLogger.swift */; };
-		4E21C0849618E0C3374BF79EDA2409A8 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1ED14F50693C01A21CB59B24AE2B45 /* Utility.swift */; };
-		80969BE656C5C9EEC117E72AD206556D /* Pods-APNsClient-Backend-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6B8959102F32A37F237E7F20448DE /* Pods-APNsClient-Backend-dummy.m */; };
-		8B6EA1E2033A617E524CE3A4DE630AAD /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2BC34173C1AD835FECE720A3313DB6 /* Storage.swift */; };
-		8DD8CE82EAA8549AB24A696EF99F072B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F940C819049CFF8741C0F5E3E075E607 /* Cocoa.framework */; };
-		A1BB7123BF53C97BCDE62AB8699BB6EF /* Pods-APNsClient-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A56F03B50B08E79DD4B2EEC102CE54 /* Pods-APNsClient-dummy.m */; };
-		A6CCD96C17E29A792601A2AFC7AFD318 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4E73D95A3BC1683D823C1FB047297C /* Actions.swift */; };
-		AA2473B820A4513F955F916963BF6EC8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F940C819049CFF8741C0F5E3E075E607 /* Cocoa.framework */; };
-		B644BFB308E882A846CE9C86DF334ADC /* VergeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B95D00C7B9D2D8555679FE9D53C7CB /* VergeStore.swift */; };
-		BEA89A378FBEB1813583FB835372B70E /* Mutations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C6207F8F0C15E09584779CC5F12A13 /* Mutations.swift */; };
-		C151906B2CC0C44228DAD7009D3ED098 /* SettingsTopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372FA9D55B50F00A443FBE43D255C07C /* SettingsTopViewController.swift */; };
-		C44577A8A7D525776D9B71ED46D5C975 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F940C819049CFF8741C0F5E3E075E607 /* Cocoa.framework */; };
-		CF0FDDF5E9FA32BF33F6E9168D58FAB8 /* Pods-APNsClient-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 24924C9A0DF68CE89F432E720FC70905 /* Pods-APNsClient-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D9A9452E7F1C3BCCEAD1C08C648FE46C /* Pods-APNsClient-Backend-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F4AC5F288CE93AA12FD38F5F1523C50 /* Pods-APNsClient-Backend-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E20B6303C219E5549A1D373A2CCAE343 /* VergeStore-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B270818BFC93F09077F7725C33F2CC /* VergeStore-dummy.m */; };
-		F6C25204762BA970D62127736A197B14 /* DispatcherContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD617F78F618FA4895C2E56575F07197 /* DispatcherContext.swift */; };
-		F8CD0756F08EDA3CBC96CCE693059DEE /* Dispatching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0497DFA5E2F8D62BF2C57D8C3738F57E /* Dispatching.swift */; };
+		124D27D2395FEB911F80534892A05CAA /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9428DB5300343169BD5ACA656ED78D93 /* Utility.swift */; };
+		128F6E0F551AAFC01586A43EF91A924B /* Getter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3407989BFA4B23C3818D0869E4D746 /* Getter.swift */; };
+		1C992679D474C13810ADC9B795257B82 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F940C819049CFF8741C0F5E3E075E607 /* Cocoa.framework */; };
+		213E6EFBFE854F5A5C38E3115C3D61F5 /* DispatcherContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B10A1A587935DEA44874DCA6F32B577 /* DispatcherContext.swift */; };
+		24E83D02EBFAD6926F68CE3F4234DBAE /* EventEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A486631B9028AEC6CE5856C6054DBBF5 /* EventEmitter.swift */; };
+		26311FC7D136789DEE6BDC594D0590E5 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF19C5DDBD172CCB3D62786EECCB73BF /* Action.swift */; };
+		3C55AC09409977A3DEC38A890D49BF6A /* DispatcherBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0338AD3A4C0BC49C82EA41D4F111401E /* DispatcherBase.swift */; };
+		44F9E1E037CCBF13051024721452CFC7 /* Verge-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7521EFB27129ED6C814D579F66AE59 /* Verge-dummy.m */; };
+		47D7195B063E93C3248B492207CB1FE4 /* DispatcherType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364C488C44E1613D89333CB08800E0E6 /* DispatcherType.swift */; };
+		48EB662AC349C0B12771FC9FBFBB810B /* Pods-APNsClient-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 24924C9A0DF68CE89F432E720FC70905 /* Pods-APNsClient-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4BF4B4FAE9E0AE9DDF77247C30EAB242 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F940C819049CFF8741C0F5E3E075E607 /* Cocoa.framework */; };
+		4EFA2A73448D7937FE0CFBF22EA7960B /* DefaultLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FC3348AE1E18EAEA4DAA0406678B7A /* DefaultLogger.swift */; };
+		503D19EDFD3074D9D720C4616FE59644 /* Verge-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FAC8A482309B78B9C36CD5DD47983D4 /* Verge-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		521417122074F05FA575853FCA14A34B /* Pods-APNsClient-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A56F03B50B08E79DD4B2EEC102CE54 /* Pods-APNsClient-dummy.m */; };
+		71753EACD181A89C4080337A07F290A0 /* Pods-APNsClient-Backend-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6B8959102F32A37F237E7F20448DE /* Pods-APNsClient-Backend-dummy.m */; };
+		7D7449A105275F8DC8AACCF6AF563CA3 /* ValueContainerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34ED607A6EF74A246D5FC30842B4F1F1 /* ValueContainerType.swift */; };
+		99CA3B1E81C666F7A859DEF27148DF2B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F940C819049CFF8741C0F5E3E075E607 /* Cocoa.framework */; };
+		A5B1E73FBD6284525E9BEB0187F3DD82 /* VergeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC174667F103E2A32E4C2DF5F39061E /* VergeStore.swift */; };
+		A9A200B23F4223ABB6398DC4426E7C90 /* Pods-APNsClient-Backend-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F4AC5F288CE93AA12FD38F5F1523C50 /* Pods-APNsClient-Backend-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CEF5A2720F7D226661168984A3A63247 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F187ABEE7F50AC15E8065F39C8B7DA /* Storage.swift */; };
+		E155FFB8440CCE3E9957773C53D67832 /* VergeStore+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABA3167EB4C3E69A6F9CBABC33A8412 /* VergeStore+.swift */; };
+		F1C7DF2FAAA437BC6FDB519C3F86D056 /* Mutation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51C58C0115423C7D9BF5E7C88A0B1BE1 /* Mutation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		94D8447FD5DE5BDFCB3A887805617F17 /* PBXContainerItemProxy */ = {
+		0D74B0E895A24C34BC24D3FCCE43A037 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D25AD7A76C74C9667D5EF83A0D85A5C6;
-			remoteInfo = VergeStore;
+			remoteGlobalIDString = 74B462085E35CA2929210D22C2FADEE7;
+			remoteInfo = Verge;
 		};
-		B39D0EBEFB46FB6108713BBD2C5C6FBB /* PBXContainerItemProxy */ = {
+		44C524C0E4D2F89197B2CD258AAEA9B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D25AD7A76C74C9667D5EF83A0D85A5C6;
-			remoteInfo = VergeStore;
+			remoteGlobalIDString = 74B462085E35CA2929210D22C2FADEE7;
+			remoteInfo = Verge;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0497DFA5E2F8D62BF2C57D8C3738F57E /* Dispatching.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Dispatching.swift; path = Sources/VergeStore/Dispatching.swift; sourceTree = "<group>"; };
+		0338AD3A4C0BC49C82EA41D4F111401E /* DispatcherBase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DispatcherBase.swift; path = Sources/VergeStore/DispatcherBase.swift; sourceTree = "<group>"; };
 		0EC22E0B484AC51D135ED3A2E8B0C622 /* Pods-APNsClient-Backend-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-APNsClient-Backend-acknowledgements.plist"; sourceTree = "<group>"; };
 		0F4AC5F288CE93AA12FD38F5F1523C50 /* Pods-APNsClient-Backend-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-APNsClient-Backend-umbrella.h"; sourceTree = "<group>"; };
-		1879049121866F514AFB91E787036383 /* VergeStore.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = VergeStore.modulemap; sourceTree = "<group>"; };
 		1A6DED96E4D08F7B0AD081FE08175E8A /* Pods-APNsClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-APNsClient.release.xcconfig"; sourceTree = "<group>"; };
+		1DC174667F103E2A32E4C2DF5F39061E /* VergeStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VergeStore.swift; path = Sources/VergeStore/VergeStore.swift; sourceTree = "<group>"; };
 		1FC15832F4662E15FAFDDE3DC90C87B5 /* Pods-APNsClient-Backend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-APNsClient-Backend.release.xcconfig"; sourceTree = "<group>"; };
-		20B95D00C7B9D2D8555679FE9D53C7CB /* VergeStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VergeStore.swift; path = Sources/VergeStore/VergeStore.swift; sourceTree = "<group>"; };
 		24924C9A0DF68CE89F432E720FC70905 /* Pods-APNsClient-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-APNsClient-umbrella.h"; sourceTree = "<group>"; };
 		2E6ECA8EE240173690AFC39C14A56199 /* Pods-APNsClient-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-APNsClient-acknowledgements.plist"; sourceTree = "<group>"; };
-		372FA9D55B50F00A443FBE43D255C07C /* SettingsTopViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SettingsTopViewController.swift; path = Sources/VergeStore/SettingsTopViewController.swift; sourceTree = "<group>"; };
+		34ED607A6EF74A246D5FC30842B4F1F1 /* ValueContainerType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ValueContainerType.swift; path = Sources/VergeCore/ValueContainerType.swift; sourceTree = "<group>"; };
+		364C488C44E1613D89333CB08800E0E6 /* DispatcherType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DispatcherType.swift; path = Sources/VergeStore/DispatcherType.swift; sourceTree = "<group>"; };
+		4291B72416C4CB83EEA88A3BB6C6D10C /* Verge.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Verge.modulemap; sourceTree = "<group>"; };
 		42A4E5E09570A6F2D1AADB8AD1156094 /* Pods_APNsClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_APNsClient.framework; path = "Pods-APNsClient.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		504E847FE3BA0AA7B89AB83A869736BB /* Pods-APNsClient-Backend-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-APNsClient-Backend-Info.plist"; sourceTree = "<group>"; };
 		50A71DC13688FD220E2CCE1D0AF2A90B /* Pods-APNsClient-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-APNsClient-acknowledgements.markdown"; sourceTree = "<group>"; };
+		51C58C0115423C7D9BF5E7C88A0B1BE1 /* Mutation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Mutation.swift; path = Sources/VergeStore/Mutation.swift; sourceTree = "<group>"; };
 		51CFB2D35D8A97468261B9C655F45635 /* Pods-APNsClient-Backend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-APNsClient-Backend.debug.xcconfig"; sourceTree = "<group>"; };
 		54EF0A36C8C8446BFB0589B010A6D5DB /* Pods-APNsClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-APNsClient.debug.xcconfig"; sourceTree = "<group>"; };
 		5A37D9E6B9BC8229C7B7C2B0A8377E12 /* Pods-APNsClient.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-APNsClient.modulemap"; sourceTree = "<group>"; };
 		60B3207070E158AD2BC03679F6719068 /* Pods-APNsClient-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-APNsClient-frameworks.sh"; sourceTree = "<group>"; };
-		6275A552B4DD31889A1118D4B8097277 /* VergeStore-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VergeStore-umbrella.h"; sourceTree = "<group>"; };
-		62FD348C9E06AB57064F9EBF646716AC /* DefaultLogger.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DefaultLogger.swift; path = Sources/VergeStore/DefaultLogger.swift; sourceTree = "<group>"; };
-		65B270818BFC93F09077F7725C33F2CC /* VergeStore-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "VergeStore-dummy.m"; sourceTree = "<group>"; };
-		790C9050B27C3B84D3E3E590336E5C02 /* VergeStore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = VergeStore.xcconfig; sourceTree = "<group>"; };
-		90C6207F8F0C15E09584779CC5F12A13 /* Mutations.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Mutations.swift; path = Sources/VergeStore/Mutations.swift; sourceTree = "<group>"; };
-		9C61CCF488D8C48B7C5DDF765B4614E6 /* Dispatcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Dispatcher.swift; path = Sources/VergeStore/Dispatcher.swift; sourceTree = "<group>"; };
+		6B10A1A587935DEA44874DCA6F32B577 /* DispatcherContext.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DispatcherContext.swift; path = Sources/VergeStore/DispatcherContext.swift; sourceTree = "<group>"; };
+		7FAC8A482309B78B9C36CD5DD47983D4 /* Verge-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Verge-umbrella.h"; sourceTree = "<group>"; };
+		86F187ABEE7F50AC15E8065F39C8B7DA /* Storage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Storage.swift; path = Sources/VergeCore/Storage.swift; sourceTree = "<group>"; };
+		9428DB5300343169BD5ACA656ED78D93 /* Utility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Utility.swift; path = Sources/VergeStore/Utility.swift; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A0EFDA5AC6333620513FEC42C01CF20F /* Pods-APNsClient-Backend-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-APNsClient-Backend-acknowledgements.markdown"; sourceTree = "<group>"; };
-		AC1ED14F50693C01A21CB59B24AE2B45 /* Utility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Utility.swift; path = Sources/VergeStore/Utility.swift; sourceTree = "<group>"; };
-		AD4E73D95A3BC1683D823C1FB047297C /* Actions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Actions.swift; path = Sources/VergeStore/Actions.swift; sourceTree = "<group>"; };
-		CD617F78F618FA4895C2E56575F07197 /* DispatcherContext.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DispatcherContext.swift; path = Sources/VergeStore/DispatcherContext.swift; sourceTree = "<group>"; };
+		A486631B9028AEC6CE5856C6054DBBF5 /* EventEmitter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EventEmitter.swift; path = Sources/VergeCore/EventEmitter.swift; sourceTree = "<group>"; };
+		AA7521EFB27129ED6C814D579F66AE59 /* Verge-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Verge-dummy.m"; sourceTree = "<group>"; };
+		AFD12E0B1DC6B4A1D0B18307357B437B /* Verge.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Verge.xcconfig; sourceTree = "<group>"; };
+		B3FC3348AE1E18EAEA4DAA0406678B7A /* DefaultLogger.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DefaultLogger.swift; path = Sources/VergeStore/DefaultLogger.swift; sourceTree = "<group>"; };
+		BF19C5DDBD172CCB3D62786EECCB73BF /* Action.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Action.swift; path = Sources/VergeStore/Action.swift; sourceTree = "<group>"; };
+		C487A4E573567BA52464B9A2ED21DBD9 /* Verge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Verge.framework; path = Verge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CABA3167EB4C3E69A6F9CBABC33A8412 /* VergeStore+.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "VergeStore+.swift"; path = "Sources/VergeStore/VergeStore+.swift"; sourceTree = "<group>"; };
 		D8AECA099E66822923A38D28B6FC22CF /* Pods_APNsClient_Backend.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_APNsClient_Backend.framework; path = "Pods-APNsClient-Backend.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9B6B8959102F32A37F237E7F20448DE /* Pods-APNsClient-Backend-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-APNsClient-Backend-dummy.m"; sourceTree = "<group>"; };
 		DF80F4A655889CD9BE76890B835C78C3 /* Pods-APNsClient-Backend.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-APNsClient-Backend.modulemap"; sourceTree = "<group>"; };
-		E0579C4F77FFC3D83664697FF4089DFB /* VergeStore-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "VergeStore-Info.plist"; sourceTree = "<group>"; };
+		E0EB889FEF49AFA587B73BF1068F712E /* Verge-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Verge-prefix.pch"; sourceTree = "<group>"; };
 		E4A56F03B50B08E79DD4B2EEC102CE54 /* Pods-APNsClient-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-APNsClient-dummy.m"; sourceTree = "<group>"; };
 		E4B828C34CF5961138E553C2C0F0B961 /* Pods-APNsClient-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-APNsClient-Info.plist"; sourceTree = "<group>"; };
-		EB3E89F6F746070C0262305149CBCBA4 /* VergeStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = VergeStore.framework; path = VergeStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F4FAAB31E9749B8C68000C22A4931A65 /* VergeStore-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VergeStore-prefix.pch"; sourceTree = "<group>"; };
+		EB3407989BFA4B23C3818D0869E4D746 /* Getter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Getter.swift; path = Sources/VergeCore/Getter.swift; sourceTree = "<group>"; };
+		F669E01D857E2D874F4D25E6090A062B /* Verge-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Verge-Info.plist"; sourceTree = "<group>"; };
 		F940C819049CFF8741C0F5E3E075E607 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
-		FD2BC34173C1AD835FECE720A3313DB6 /* Storage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Storage.swift; path = Sources/VergeStore/Storage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		10B01D15F1FD53EF8FB0B99748FFBDC4 /* Frameworks */ = {
+		6174E8C0E4B90FEE95E533BB8C94CC80 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8DD8CE82EAA8549AB24A696EF99F072B /* Cocoa.framework in Frameworks */,
+				4BF4B4FAE9E0AE9DDF77247C30EAB242 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7C8C79B38D5E1FC6326CB789FC806C64 /* Frameworks */ = {
+		7B1E163F674031E641CD170BA9A5EFD4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C44577A8A7D525776D9B71ED46D5C975 /* Cocoa.framework in Frameworks */,
+				1C992679D474C13810ADC9B795257B82 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FBCDC28B8235588DBC0C058FB8B0DA60 /* Frameworks */ = {
+		C98BA86188F3404CFB9BE1286E5AFDDE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA2473B820A4513F955F916963BF6EC8 /* Cocoa.framework in Frameworks */,
+				99CA3B1E81C666F7A859DEF27148DF2B /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		034CBA0F31145D1F4EBD10A04D399E5A /* Products */ = {
+		35C626F917E871AFDB7A814828904A54 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				42A4E5E09570A6F2D1AADB8AD1156094 /* Pods_APNsClient.framework */,
-				D8AECA099E66822923A38D28B6FC22CF /* Pods_APNsClient_Backend.framework */,
-				EB3E89F6F746070C0262305149CBCBA4 /* VergeStore.framework */,
+				A486631B9028AEC6CE5856C6054DBBF5 /* EventEmitter.swift */,
+				EB3407989BFA4B23C3818D0869E4D746 /* Getter.swift */,
+				86F187ABEE7F50AC15E8065F39C8B7DA /* Storage.swift */,
+				34ED607A6EF74A246D5FC30842B4F1F1 /* ValueContainerType.swift */,
 			);
-			name = Products;
+			name = Core;
 			sourceTree = "<group>";
 		};
 		37F285D2894ACF2167C6B19EBFD5BF95 /* Pods-APNsClient */ = {
@@ -141,22 +148,20 @@
 			path = "Target Support Files/Pods-APNsClient";
 			sourceTree = "<group>";
 		};
-		3D54F261FB7CCA3E4C3CBD694F9D5D53 /* Pods */ = {
+		3F37DEBE07F990245D71B022DC4395AE /* Store */ = {
 			isa = PBXGroup;
 			children = (
-				439E6F51C603E8DAB05618B858CE0020 /* VergeStore */,
+				BF19C5DDBD172CCB3D62786EECCB73BF /* Action.swift */,
+				B3FC3348AE1E18EAEA4DAA0406678B7A /* DefaultLogger.swift */,
+				0338AD3A4C0BC49C82EA41D4F111401E /* DispatcherBase.swift */,
+				6B10A1A587935DEA44874DCA6F32B577 /* DispatcherContext.swift */,
+				364C488C44E1613D89333CB08800E0E6 /* DispatcherType.swift */,
+				51C58C0115423C7D9BF5E7C88A0B1BE1 /* Mutation.swift */,
+				9428DB5300343169BD5ACA656ED78D93 /* Utility.swift */,
+				1DC174667F103E2A32E4C2DF5F39061E /* VergeStore.swift */,
+				CABA3167EB4C3E69A6F9CBABC33A8412 /* VergeStore+.swift */,
 			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		439E6F51C603E8DAB05618B858CE0020 /* VergeStore */ = {
-			isa = PBXGroup;
-			children = (
-				F74729C967D8293D5154B5CD21EEDDF3 /* Core */,
-				BADDE78B4487F63968CE12879D8C82DD /* Support Files */,
-			);
-			name = VergeStore;
-			path = VergeStore;
+			name = Store;
 			sourceTree = "<group>";
 		};
 		48C0C027D6C216B64778E7FEE3E5F585 /* Targets Support Files */ = {
@@ -166,6 +171,31 @@
 				732F15B102437AEEDA8E2348E0C1F118 /* Pods-APNsClient-Backend */,
 			);
 			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		4A4E62CF610C8C9716529C11425772A5 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				4291B72416C4CB83EEA88A3BB6C6D10C /* Verge.modulemap */,
+				AFD12E0B1DC6B4A1D0B18307357B437B /* Verge.xcconfig */,
+				AA7521EFB27129ED6C814D579F66AE59 /* Verge-dummy.m */,
+				F669E01D857E2D874F4D25E6090A062B /* Verge-Info.plist */,
+				E0EB889FEF49AFA587B73BF1068F712E /* Verge-prefix.pch */,
+				7FAC8A482309B78B9C36CD5DD47983D4 /* Verge-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Verge";
+			sourceTree = "<group>";
+		};
+		50AA53A8316EB8415554BDBA1B9A6B8D /* Verge */ = {
+			isa = PBXGroup;
+			children = (
+				35C626F917E871AFDB7A814828904A54 /* Core */,
+				3F37DEBE07F990245D71B022DC4395AE /* Store */,
+				4A4E62CF610C8C9716529C11425772A5 /* Support Files */,
+			);
+			name = Verge;
+			path = Verge;
 			sourceTree = "<group>";
 		};
 		732F15B102437AEEDA8E2348E0C1F118 /* Pods-APNsClient-Backend */ = {
@@ -184,18 +214,12 @@
 			path = "Target Support Files/Pods-APNsClient-Backend";
 			sourceTree = "<group>";
 		};
-		BADDE78B4487F63968CE12879D8C82DD /* Support Files */ = {
+		BA7135BD4FF3F6DD6D21FFA67E8EB3CC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				1879049121866F514AFB91E787036383 /* VergeStore.modulemap */,
-				790C9050B27C3B84D3E3E590336E5C02 /* VergeStore.xcconfig */,
-				65B270818BFC93F09077F7725C33F2CC /* VergeStore-dummy.m */,
-				E0579C4F77FFC3D83664697FF4089DFB /* VergeStore-Info.plist */,
-				F4FAAB31E9749B8C68000C22A4931A65 /* VergeStore-prefix.pch */,
-				6275A552B4DD31889A1118D4B8097277 /* VergeStore-umbrella.h */,
+				50AA53A8316EB8415554BDBA1B9A6B8D /* Verge */,
 			);
-			name = "Support Files";
-			path = "../Target Support Files/VergeStore";
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		CBD43E0947D94E318A0ED1350CFF29ED /* OS X */ = {
@@ -211,8 +235,8 @@
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				E0A1E60606E0BF6E2E10F1F01350DFE8 /* Frameworks */,
-				3D54F261FB7CCA3E4C3CBD694F9D5D53 /* Pods */,
-				034CBA0F31145D1F4EBD10A04D399E5A /* Products */,
+				BA7135BD4FF3F6DD6D21FFA67E8EB3CC /* Pods */,
+				E180297624D3F8DBD703D6D0F737F8BD /* Products */,
 				48C0C027D6C216B64778E7FEE3E5F585 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
@@ -225,47 +249,40 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F74729C967D8293D5154B5CD21EEDDF3 /* Core */ = {
+		E180297624D3F8DBD703D6D0F737F8BD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AD4E73D95A3BC1683D823C1FB047297C /* Actions.swift */,
-				62FD348C9E06AB57064F9EBF646716AC /* DefaultLogger.swift */,
-				9C61CCF488D8C48B7C5DDF765B4614E6 /* Dispatcher.swift */,
-				CD617F78F618FA4895C2E56575F07197 /* DispatcherContext.swift */,
-				0497DFA5E2F8D62BF2C57D8C3738F57E /* Dispatching.swift */,
-				90C6207F8F0C15E09584779CC5F12A13 /* Mutations.swift */,
-				372FA9D55B50F00A443FBE43D255C07C /* SettingsTopViewController.swift */,
-				FD2BC34173C1AD835FECE720A3313DB6 /* Storage.swift */,
-				AC1ED14F50693C01A21CB59B24AE2B45 /* Utility.swift */,
-				20B95D00C7B9D2D8555679FE9D53C7CB /* VergeStore.swift */,
+				42A4E5E09570A6F2D1AADB8AD1156094 /* Pods_APNsClient.framework */,
+				D8AECA099E66822923A38D28B6FC22CF /* Pods_APNsClient_Backend.framework */,
+				C487A4E573567BA52464B9A2ED21DBD9 /* Verge.framework */,
 			);
-			name = Core;
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		49F4B4BDA979AAC9696CE20042000F46 /* Headers */ = {
+		5B5F34B7EB8CC9EC291BD5A8DA82E346 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				148A4B99FFE056C3F4AC55AA637414CB /* VergeStore-umbrella.h in Headers */,
+				503D19EDFD3074D9D720C4616FE59644 /* Verge-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		62311C145FFE9757338A7978A5B90AF7 /* Headers */ = {
+		984B085CB02A89C386D294C144C46B8B /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9A9452E7F1C3BCCEAD1C08C648FE46C /* Pods-APNsClient-Backend-umbrella.h in Headers */,
+				A9A200B23F4223ABB6398DC4426E7C90 /* Pods-APNsClient-Backend-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EB668A8CD75FE453028815ABC0B2C0BD /* Headers */ = {
+		FC41DAF1BA2A0499458971104D9D30D0 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF0FDDF5E9FA32BF33F6E9168D58FAB8 /* Pods-APNsClient-umbrella.h in Headers */,
+				48EB662AC349C0B12771FC9FBFBB810B /* Pods-APNsClient-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,17 +291,17 @@
 /* Begin PBXNativeTarget section */
 		085D9DA865E637F9333977A547C42438 /* Pods-APNsClient */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 30DC37AC01C8BFB77EB44883775506AD /* Build configuration list for PBXNativeTarget "Pods-APNsClient" */;
+			buildConfigurationList = 2BF52B973B82DC6C68EF1F4E79C3542B /* Build configuration list for PBXNativeTarget "Pods-APNsClient" */;
 			buildPhases = (
-				EB668A8CD75FE453028815ABC0B2C0BD /* Headers */,
-				16055DF2749CFDC5A6496429EC7CD085 /* Sources */,
-				FBCDC28B8235588DBC0C058FB8B0DA60 /* Frameworks */,
-				D82CEE4EA8D67E306E921F281A1B0988 /* Resources */,
+				FC41DAF1BA2A0499458971104D9D30D0 /* Headers */,
+				F1D52FD378588EAC69F00B69D6B192C7 /* Sources */,
+				6174E8C0E4B90FEE95E533BB8C94CC80 /* Frameworks */,
+				7D19F14D7C00C105B6A4B81C85F893E5 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				2797A3B8A35EDB1737D578400B638BB2 /* PBXTargetDependency */,
+				DB4E7DD0F819008AEAC0EB91FDA55B87 /* PBXTargetDependency */,
 			);
 			name = "Pods-APNsClient";
 			productName = "Pods-APNsClient";
@@ -293,39 +310,39 @@
 		};
 		3D4148DFAABF624D2950356A625F1187 /* Pods-APNsClient-Backend */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 61A4FBD673C981DBC83D35E64F9C6499 /* Build configuration list for PBXNativeTarget "Pods-APNsClient-Backend" */;
+			buildConfigurationList = E4F6CDC256E83548ECBE72E380A5F3E0 /* Build configuration list for PBXNativeTarget "Pods-APNsClient-Backend" */;
 			buildPhases = (
-				62311C145FFE9757338A7978A5B90AF7 /* Headers */,
-				CE3D924AF62ED402BA8204C703D6EE84 /* Sources */,
-				10B01D15F1FD53EF8FB0B99748FFBDC4 /* Frameworks */,
-				C812A3B6A72C2FF0D6694CA035409010 /* Resources */,
+				984B085CB02A89C386D294C144C46B8B /* Headers */,
+				8DA4615FD711BD2CF8FD1AB4FAAD6CFA /* Sources */,
+				7B1E163F674031E641CD170BA9A5EFD4 /* Frameworks */,
+				1E48FFC3E84FDE27F1251DCA0B9F0C6A /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				561199E4841C1437AB060EA57B2D1F68 /* PBXTargetDependency */,
+				93B7A31A82AC304E66536918DB46048B /* PBXTargetDependency */,
 			);
 			name = "Pods-APNsClient-Backend";
 			productName = "Pods-APNsClient-Backend";
 			productReference = D8AECA099E66822923A38D28B6FC22CF /* Pods_APNsClient_Backend.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		D25AD7A76C74C9667D5EF83A0D85A5C6 /* VergeStore */ = {
+		74B462085E35CA2929210D22C2FADEE7 /* Verge */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 66A9A1B3394C559F9E138773A8DA5124 /* Build configuration list for PBXNativeTarget "VergeStore" */;
+			buildConfigurationList = 55756EDCADDF9DC4C5FEF4F2F4D0B297 /* Build configuration list for PBXNativeTarget "Verge" */;
 			buildPhases = (
-				49F4B4BDA979AAC9696CE20042000F46 /* Headers */,
-				2D542D04EDF8B32F357D0EDC93C32F77 /* Sources */,
-				7C8C79B38D5E1FC6326CB789FC806C64 /* Frameworks */,
-				CB9C350792AAC6A40FD29DEF006FF833 /* Resources */,
+				5B5F34B7EB8CC9EC291BD5A8DA82E346 /* Headers */,
+				3D97ACFD25BA09FCA4EF521D4A57F604 /* Sources */,
+				C98BA86188F3404CFB9BE1286E5AFDDE /* Frameworks */,
+				61423F7852850D84E9C1F131AB17A4F6 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = VergeStore;
-			productName = VergeStore;
-			productReference = EB3E89F6F746070C0262305149CBCBA4 /* VergeStore.framework */;
+			name = Verge;
+			productName = Verge;
+			productReference = C487A4E573567BA52464B9A2ED21DBD9 /* Verge.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -346,33 +363,33 @@
 				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = 034CBA0F31145D1F4EBD10A04D399E5A /* Products */;
+			productRefGroup = E180297624D3F8DBD703D6D0F737F8BD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				085D9DA865E637F9333977A547C42438 /* Pods-APNsClient */,
 				3D4148DFAABF624D2950356A625F1187 /* Pods-APNsClient-Backend */,
-				D25AD7A76C74C9667D5EF83A0D85A5C6 /* VergeStore */,
+				74B462085E35CA2929210D22C2FADEE7 /* Verge */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		C812A3B6A72C2FF0D6694CA035409010 /* Resources */ = {
+		1E48FFC3E84FDE27F1251DCA0B9F0C6A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CB9C350792AAC6A40FD29DEF006FF833 /* Resources */ = {
+		61423F7852850D84E9C1F131AB17A4F6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D82CEE4EA8D67E306E921F281A1B0988 /* Resources */ = {
+		7D19F14D7C00C105B6A4B81C85F893E5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -382,54 +399,57 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		16055DF2749CFDC5A6496429EC7CD085 /* Sources */ = {
+		3D97ACFD25BA09FCA4EF521D4A57F604 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1BB7123BF53C97BCDE62AB8699BB6EF /* Pods-APNsClient-dummy.m in Sources */,
+				26311FC7D136789DEE6BDC594D0590E5 /* Action.swift in Sources */,
+				4EFA2A73448D7937FE0CFBF22EA7960B /* DefaultLogger.swift in Sources */,
+				3C55AC09409977A3DEC38A890D49BF6A /* DispatcherBase.swift in Sources */,
+				213E6EFBFE854F5A5C38E3115C3D61F5 /* DispatcherContext.swift in Sources */,
+				47D7195B063E93C3248B492207CB1FE4 /* DispatcherType.swift in Sources */,
+				24E83D02EBFAD6926F68CE3F4234DBAE /* EventEmitter.swift in Sources */,
+				128F6E0F551AAFC01586A43EF91A924B /* Getter.swift in Sources */,
+				F1C7DF2FAAA437BC6FDB519C3F86D056 /* Mutation.swift in Sources */,
+				CEF5A2720F7D226661168984A3A63247 /* Storage.swift in Sources */,
+				124D27D2395FEB911F80534892A05CAA /* Utility.swift in Sources */,
+				7D7449A105275F8DC8AACCF6AF563CA3 /* ValueContainerType.swift in Sources */,
+				44F9E1E037CCBF13051024721452CFC7 /* Verge-dummy.m in Sources */,
+				E155FFB8440CCE3E9957773C53D67832 /* VergeStore+.swift in Sources */,
+				A5B1E73FBD6284525E9BEB0187F3DD82 /* VergeStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2D542D04EDF8B32F357D0EDC93C32F77 /* Sources */ = {
+		8DA4615FD711BD2CF8FD1AB4FAAD6CFA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A6CCD96C17E29A792601A2AFC7AFD318 /* Actions.swift in Sources */,
-				482353D7424415F7D998677948EEEB1F /* DefaultLogger.swift in Sources */,
-				409014F1130833F5E0ECEBF658FD3D0F /* Dispatcher.swift in Sources */,
-				F6C25204762BA970D62127736A197B14 /* DispatcherContext.swift in Sources */,
-				F8CD0756F08EDA3CBC96CCE693059DEE /* Dispatching.swift in Sources */,
-				BEA89A378FBEB1813583FB835372B70E /* Mutations.swift in Sources */,
-				C151906B2CC0C44228DAD7009D3ED098 /* SettingsTopViewController.swift in Sources */,
-				8B6EA1E2033A617E524CE3A4DE630AAD /* Storage.swift in Sources */,
-				4E21C0849618E0C3374BF79EDA2409A8 /* Utility.swift in Sources */,
-				E20B6303C219E5549A1D373A2CCAE343 /* VergeStore-dummy.m in Sources */,
-				B644BFB308E882A846CE9C86DF334ADC /* VergeStore.swift in Sources */,
+				71753EACD181A89C4080337A07F290A0 /* Pods-APNsClient-Backend-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CE3D924AF62ED402BA8204C703D6EE84 /* Sources */ = {
+		F1D52FD378588EAC69F00B69D6B192C7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80969BE656C5C9EEC117E72AD206556D /* Pods-APNsClient-Backend-dummy.m in Sources */,
+				521417122074F05FA575853FCA14A34B /* Pods-APNsClient-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2797A3B8A35EDB1737D578400B638BB2 /* PBXTargetDependency */ = {
+		93B7A31A82AC304E66536918DB46048B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = VergeStore;
-			target = D25AD7A76C74C9667D5EF83A0D85A5C6 /* VergeStore */;
-			targetProxy = 94D8447FD5DE5BDFCB3A887805617F17 /* PBXContainerItemProxy */;
+			name = Verge;
+			target = 74B462085E35CA2929210D22C2FADEE7 /* Verge */;
+			targetProxy = 0D74B0E895A24C34BC24D3FCCE43A037 /* PBXContainerItemProxy */;
 		};
-		561199E4841C1437AB060EA57B2D1F68 /* PBXTargetDependency */ = {
+		DB4E7DD0F819008AEAC0EB91FDA55B87 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = VergeStore;
-			target = D25AD7A76C74C9667D5EF83A0D85A5C6 /* VergeStore */;
-			targetProxy = B39D0EBEFB46FB6108713BBD2C5C6FBB /* PBXContainerItemProxy */;
+			name = Verge;
+			target = 74B462085E35CA2929210D22C2FADEE7 /* Verge */;
+			targetProxy = 44C524C0E4D2F89197B2CD258AAEA9B2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -494,7 +514,85 @@
 			};
 			name = Release;
 		};
-		0F51A8515AC42E7F6EF97234A9BE5C71 /* Debug */ = {
+		0AB7E4BA520400478180C661277162C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A6DED96E4D08F7B0AD081FE08175E8A /* Pods-APNsClient.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "Target Support Files/Pods-APNsClient/Pods-APNsClient-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MODULEMAP_FILE = "Target Support Files/Pods-APNsClient/Pods-APNsClient.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		4F1540CE9291EAB7BE6F97DAC4335202 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AFD12E0B1DC6B4A1D0B18307357B437B /* Verge.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_PREFIX_HEADER = "Target Support Files/Verge/Verge-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Verge/Verge-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MODULEMAP_FILE = "Target Support Files/Verge/Verge.modulemap";
+				PRODUCT_MODULE_NAME = Verge;
+				PRODUCT_NAME = Verge;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		66BEAD34056884A1011E16885C7A1A72 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 54EF0A36C8C8446BFB0589B010A6D5DB /* Pods-APNsClient.debug.xcconfig */;
 			buildSettings = {
@@ -533,122 +631,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
-		};
-		11C63B312064A9B7D18A8520A38CDA92 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 790C9050B27C3B84D3E3E590336E5C02 /* VergeStore.xcconfig */;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				GCC_PREFIX_HEADER = "Target Support Files/VergeStore/VergeStore-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/VergeStore/VergeStore-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MODULEMAP_FILE = "Target Support Files/VergeStore/VergeStore.modulemap";
-				PRODUCT_MODULE_NAME = VergeStore;
-				PRODUCT_NAME = VergeStore;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.1;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		295C6E96A119D4106EF222D8F1368E55 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FC15832F4662E15FAFDDE3DC90C87B5 /* Pods-APNsClient-Backend.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "Target Support Files/Pods-APNsClient-Backend/Pods-APNsClient-Backend-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MODULEMAP_FILE = "Target Support Files/Pods-APNsClient-Backend/Pods-APNsClient-Backend.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		5699F5432E0B5EAC784B63F9574E66E7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 790C9050B27C3B84D3E3E590336E5C02 /* VergeStore.xcconfig */;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				GCC_PREFIX_HEADER = "Target Support Files/VergeStore/VergeStore-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/VergeStore/VergeStore-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MODULEMAP_FILE = "Target Support Files/VergeStore/VergeStore.modulemap";
-				PRODUCT_MODULE_NAME = VergeStore;
-				PRODUCT_NAME = VergeStore;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.1;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
 		};
 		6DC6BBF7D2A721A4E91A75A28EEB8E83 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -714,7 +696,45 @@
 			};
 			name = Debug;
 		};
-		8D93E974DDA9655E05E5418D74611F8E /* Debug */ = {
+		934A5E939D46C92AA1656C38756CFBDD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AFD12E0B1DC6B4A1D0B18307357B437B /* Verge.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_PREFIX_HEADER = "Target Support Files/Verge/Verge-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Verge/Verge-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MODULEMAP_FILE = "Target Support Files/Verge/Verge.modulemap";
+				PRODUCT_MODULE_NAME = Verge;
+				PRODUCT_NAME = Verge;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		CA76C4C67BD7B99123886DB9C967BFAF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 51CFB2D35D8A97468261B9C655F45635 /* Pods-APNsClient-Backend.debug.xcconfig */;
 			buildSettings = {
@@ -754,9 +774,9 @@
 			};
 			name = Debug;
 		};
-		A96ABF63856A32A6B8FAA1A6ACFA6C0B /* Release */ = {
+		E52092BE5022A029C2B95A7738C50AB1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1A6DED96E4D08F7B0AD081FE08175E8A /* Pods-APNsClient.release.xcconfig */;
+			baseConfigurationReference = 1FC15832F4662E15FAFDDE3DC90C87B5 /* Pods-APNsClient-Backend.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
@@ -772,7 +792,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "Target Support Files/Pods-APNsClient/Pods-APNsClient-Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-APNsClient-Backend/Pods-APNsClient-Backend-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -781,7 +801,7 @@
 				);
 				MACH_O_TYPE = staticlib;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MODULEMAP_FILE = "Target Support Files/Pods-APNsClient/Pods-APNsClient.modulemap";
+				MODULEMAP_FILE = "Target Support Files/Pods-APNsClient-Backend/Pods-APNsClient-Backend.modulemap";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
@@ -797,11 +817,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		30DC37AC01C8BFB77EB44883775506AD /* Build configuration list for PBXNativeTarget "Pods-APNsClient" */ = {
+		2BF52B973B82DC6C68EF1F4E79C3542B /* Build configuration list for PBXNativeTarget "Pods-APNsClient" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0F51A8515AC42E7F6EF97234A9BE5C71 /* Debug */,
-				A96ABF63856A32A6B8FAA1A6ACFA6C0B /* Release */,
+				66BEAD34056884A1011E16885C7A1A72 /* Debug */,
+				0AB7E4BA520400478180C661277162C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -815,20 +835,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		61A4FBD673C981DBC83D35E64F9C6499 /* Build configuration list for PBXNativeTarget "Pods-APNsClient-Backend" */ = {
+		55756EDCADDF9DC4C5FEF4F2F4D0B297 /* Build configuration list for PBXNativeTarget "Verge" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8D93E974DDA9655E05E5418D74611F8E /* Debug */,
-				295C6E96A119D4106EF222D8F1368E55 /* Release */,
+				4F1540CE9291EAB7BE6F97DAC4335202 /* Debug */,
+				934A5E939D46C92AA1656C38756CFBDD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		66A9A1B3394C559F9E138773A8DA5124 /* Build configuration list for PBXNativeTarget "VergeStore" */ = {
+		E4F6CDC256E83548ECBE72E380A5F3E0 /* Build configuration list for PBXNativeTarget "Pods-APNsClient-Backend" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				11C63B312064A9B7D18A8520A38CDA92 /* Debug */,
-				5699F5432E0B5EAC784B63F9574E66E7 /* Release */,
+				CA76C4C67BD7B99123886DB9C967BFAF /* Debug */,
+				E52092BE5022A029C2B95A7738C50AB1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

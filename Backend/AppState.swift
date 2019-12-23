@@ -8,7 +8,7 @@
 
 import Foundation
 
-import VergeStore
+import Verge
 
 public struct AppState: StateType {
   
@@ -28,7 +28,7 @@ public struct SessionState: Identifiable {
   public var _ui: Any? = nil
 }
 
-public final class Store: VergeDefaultStore<AppState> {
+public final class Store: StoreBase<AppState, Never> {
   init() {
     super.init(initialState: .init(), logger: DefaultLogger.shared)
   }

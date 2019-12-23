@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double VergeStoreVersionNumber;
-FOUNDATION_EXPORT const unsigned char VergeStoreVersionString[];
+FOUNDATION_EXPORT double VergeVersionNumber;
+FOUNDATION_EXPORT const unsigned char VergeVersionString[];
 

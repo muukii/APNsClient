@@ -5,7 +5,7 @@ target 'APNsClient' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  pod 'VergeStore/Core', git: 'git@github.com:muukii/Verge', branch: 'master'
+  pod 'Verge/Store', git: 'git@github.com:muukii/Verge', branch: 'master'
   # Pods for APNsClient
 
   target 'Backend' do
