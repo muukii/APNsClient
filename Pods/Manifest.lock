@@ -13,7 +13,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Verge:
-    :commit: 1450db1be2a1df7bd53dbf3a7986699d71740d7d
+    :commit: f5d5a41cba96658fc5f60ae7882d568a957e27a9
     :git: "git@github.com:muukii/Verge"
 
 SPEC CHECKSUMS:

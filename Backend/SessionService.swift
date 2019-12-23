@@ -16,45 +16,44 @@ import NIO
 
 public typealias APNEnvironment = APNSwiftConfiguration.Environment
 
-public final class SessionService: Store.Dispatcher, ScopedDispatching {
+extension DispatcherContext where Dispatcher : SessionService {
+  
+  var scopedState: SessionState {
+    state.sessions[dispatcher.sessionStateID]!
+  }
+}
+
+public final class SessionService: Store.Dispatcher {
       
-  public static let scopedStateKeyPath: WritableKeyPath<AppState, SessionState>
+  private let scopedStateKeyPath: WritableKeyPath<AppState, SessionState>
   
   fileprivate let queue: DispatchQueue = .init(label: "push")
   
+  let sessionStateID: String
+  
   init(sessionStateID: String) {
     self.scopedStateKeyPath = \AppState.sessions[sessionStateID]!
+    self.sessionStateID = sessionStateID
     super.init(target: ApplicationContainer.store)
   }
   
-}
-
-extension Mutations where Base : SessionService {
-  public func globalIncrement() {
-    
-    descriptor.commit {
+  public func globalIncrement() -> Mutation<Void> {
+    return .mutation {
       $0.count += 1
     }
-    
   }
   
-  public func increment() {
-    
-    descriptor.commitScoped {
-      $0.count += 1
-    }
-    
-  }
-  
-  public func setP8FileURL(_ url: URL) {
-    descriptor.commitScoped {
-      $0.p8FileURL = url
+  public func increment() -> Mutation<Void>  {
+    return .mutation(scopedStateKeyPath) { (s) in
+      s.count += 1
     }
   }
   
-}
-
-extension Actions where Base : SessionService {
+  public func setP8FileURL(_ url: URL) -> Mutation<Void>  {
+    return .mutation(scopedStateKeyPath) { (s) in
+      s.p8FileURL = url
+    }
+  }
   
   @discardableResult
   public func send(
@@ -64,12 +63,11 @@ extension Actions where Base : SessionService {
     enviroment: APNSwiftConfiguration.Environment,
     payload: String,
     deviceToken: String
-  ) -> Future<Void, Error> {
-    
-    descriptor.dispatch { (c) in
+  ) -> Action<Future<Void, Error>> {
+    return .action { c in
       
       Future<Void, Error>.init { (promise) in
-        self.base.queue.async {
+        self.queue.async {
           guard let url = c.scopedState.p8FileURL else { return }
           do {
             
@@ -95,7 +93,7 @@ extension Actions where Base : SessionService {
             try group.syncShutdownGracefully()
             
             print(res)
-          
+            
             promise(.success(()))
             
           } catch {
@@ -106,7 +104,7 @@ extension Actions where Base : SessionService {
           }
         }
       }
-                             
+      
     }
     
   }

@@ -9,7 +9,7 @@
 import Foundation
 
 import Combine
-import VergeStore
+import Verge
 
 import Backend
 
