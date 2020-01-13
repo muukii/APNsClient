@@ -27,17 +27,19 @@ import Foundation
 import VergeCore
 #endif
 
-extension StoreBase {
-  
-  @inlinable
-  public func getter<Key, Output>(
-    selector: @escaping (State) -> Output,
-    equality: EqualityComputer<State, Key>
-  ) -> Getter<State, Output> {
-    
-    _backingStorage.getter(selector: selector, equality: equality)
+extension StoreBase: ValueContainerType {
+  public func lock() {
+    _backingStorage.lock()
   }
   
+  public func unlock() {
+    _backingStorage.unlock()
+  }
+    
+  public var wrappedValue: State {
+    _read { yield state }
+  }
+    
 }
 
 #endif

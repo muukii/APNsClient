@@ -1,128 +1,32 @@
 //
-// Copyright (c) 2019 muukii
+//  Getter.swift
+//  VergeCore
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
+//  Created by muukii on 2020/01/10.
+//  Copyright © 2020 muukii. All rights reserved.
 //
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
 
 import Foundation
 
-open class GetterBase<Output> {
+public protocol GetterType: Hashable {
+  associatedtype Output
+}
+
+open class GetterBase<Output>: GetterType {
   
-  let willUpdateEmitter: EventEmitter<Void>
-  let didUpdateEmitter: EventEmitter<Output>
+  public static func == (lhs: GetterBase<Output>, rhs: GetterBase<Output>) -> Bool {
+    lhs === rhs
+  }
   
-  public var value: Output {
+  public func hash(into hasher: inout Hasher) {
+    ObjectIdentifier(self).hash(into: &hasher)
+  }
+  
+  open var value: Output {
     fatalError()
   }
   
-  init(willUpdateEmitter: EventEmitter<Void>, didUpdateEmitter: EventEmitter<Output>) {
-    self.willUpdateEmitter = willUpdateEmitter
-    self.didUpdateEmitter = didUpdateEmitter
-  }
-  
-  /// Register observer with closure.
-  /// Storage tells got a newValue.
-  /// - Returns: Token to stop subscribing. (Optional) You may need to retain somewhere. But subscription will be disposed when Storage was destructed.
-  @discardableResult
-  public func addWillUpdate(subscriber: @escaping () -> Void) -> EventEmitterSubscribeToken {
-    willUpdateEmitter.add(subscriber)
-  }
-  
-  /// Register observer with closure.
-  /// Storage tells got a newValue.
-  /// - Returns: Token to stop subscribing. (Optional) You may need to retain somewhere. But subscription will be disposed when Storage was destructed.
-  @discardableResult
-  public func addDidUpdate(subscriber: @escaping (Output) -> Void) -> EventEmitterSubscribeToken {
-    didUpdateEmitter.add(subscriber)
-  }
-}
-
-public final class AnyGetter<Output>: GetterBase<Output> {
-  
-  private let valueGetter: () -> Output
-  
-  public init<Source>(_ source: Getter<Source, Output>) {
-    
-    self.valueGetter = {
-      // retains source
-      source.value
-    }
-    
-    super.init(
-      willUpdateEmitter: source.willUpdateEmitter,
-      didUpdateEmitter: source.didUpdateEmitter
-    )
-  }
-  
-  public override var value: Output {
-    valueGetter()
-  }
-  
-}
-
-open class Getter<Input, Output>: GetterBase<Output> {
-  
-  private let selector: (Input) -> Output
-  private var computedValue: Output
-  private let memoizes: Bool
-  private let checker: (Input) -> Bool
-  private let onDeinit: () -> Void
-       
-  public init<Key>(
-    initialSource: Input,
-    selector: @escaping (Input) -> Output,
-    equality: EqualityComputer<Input, Key>,
-    memoizes: Bool = true,
-    onDeinit: @escaping () -> Void
-  ) {
-    
-    self.onDeinit = onDeinit
-    self.selector = selector
-    self.memoizes = memoizes
-    self.checker = equality.input
-    
-    self.computedValue = selector(initialSource)
-    
-    super.init(willUpdateEmitter: .init(), didUpdateEmitter: .init())
-    
-    // To store previous value
-    _ = self.checker(initialSource)
-  }
-  
-  deinit {
-    onDeinit()
-  }
-  
-  public override var value: Output {
-    computedValue
-  }
-  
-  public func _accept(sourceValue: Input) {
-    guard !memoizes || !checker(sourceValue) else { return }
-    willUpdateEmitter.accept(())
-    let newValue = selector(sourceValue)
-    computedValue = newValue
-    didUpdateEmitter.accept(newValue)
-  }
-    
-  public func asAny() -> AnyGetter<Output> {
-    .init(self)
-  }
+  public init() {}
   
 }
 
@@ -130,11 +34,87 @@ open class Getter<Input, Output>: GetterBase<Output> {
 
 import Combine
 
+@available(iOS 13, macOS 10.15, *)
+public class Getter<Output>: GetterBase<Output>, Publisher {
+  
+  public typealias Failure = Never
+  
+  let output: CurrentValueSubject<Output, Never>
+  
+  public override var value: Output {
+    output.value
+  }
+  
+  private var subscriptions = Set<AnyCancellable>()
+  
+  /// Initialize from publisher
+  ///
+  /// - Attension: Please don't use operator that dispatches asynchronously.
+  /// - Parameter observable:
+  public convenience init<O: Publisher>(from publisher: () -> O) where O.Output == Output, O.Failure == Never {
+    self.init(from: publisher())
+  }
+  
+  /// Initialize from publisher
+  ///
+  /// - Attension: Please don't use operator that dispatches asynchronously.
+  /// - Parameter observable:
+  public init<O: Publisher>(from publisher: O) where O.Output == Output, O.Failure == Never {
+    
+    let pipe = publisher.buffer(size: 1, prefetch: .byRequest, whenFull: .dropOldest).makeConnectable()
+    
+    pipe.connect().store(in: &subscriptions)
+    
+    var initialValue: Output!
+    
+    pipe.first().sink { value in
+      initialValue = value
+    }
+    .store(in: &subscriptions)
+    
+    precondition(initialValue != nil, "Don't use asynchronous operator in \(publisher), and it must emit the value immediately.")
+        
+    let _output = CurrentValueSubject<Output, Never>.init(initialValue)
+        
+    pipe.sink { [weak _output] (value) in
+      _output?.send(value)
+    }
+    .store(in: &subscriptions)
+    
+    _output.send(initialValue)
+    
+    self.output = _output
+  }
+  
+  public func receive<S>(subscriber: S) where S : Subscriber, Failure == S.Failure, Output == S.Input {
+
+    output.receive(subscriber: subscriber)
+  }
+    
+}
+
+@available(iOS 13, macOS 10.15, *)
+public final class GetterSource<Input, Output>: Getter<Output> {
+  
+  init<O: Publisher>(
+    input: O
+  ) where O.Output == Output, O.Failure == Never {
+    
+    super.init(from: input)
+    
+  }
+  
+  public func asGetter() -> Getter<Output> {
+    self
+  }
+  
+}
+
 fileprivate var _willChangeAssociated: Void?
 fileprivate var _didChangeAssociated: Void?
 
 @available(iOS 13.0, macOS 10.15, *)
-extension GetterBase: ObservableObject {
+extension Storage: ObservableObject {
   
   public var objectWillChange: ObservableObjectPublisher {
     if let associated = objc_getAssociatedObject(self, &_willChangeAssociated) as? ObservableObjectPublisher {
@@ -157,12 +137,12 @@ extension GetterBase: ObservableObject {
     }
   }
   
-  public var didChangePublisher: AnyPublisher<Output, Never> {
+  public var publisher: AnyPublisher<Value, Never> {
     
-    if let associated = objc_getAssociatedObject(self, &_didChangeAssociated) as? PassthroughSubject<Output, Never> {
+    if let associated = objc_getAssociatedObject(self, &_didChangeAssociated) as? CurrentValueSubject<Value, Never> {
       return associated.eraseToAnyPublisher()
     } else {
-      let associated = PassthroughSubject<Output, Never>()
+      let associated = CurrentValueSubject<Value, Never>(value)
       objc_setAssociatedObject(self, &_didChangeAssociated, associated, .OBJC_ASSOCIATION_RETAIN)
       
       addDidUpdate { s in
@@ -179,95 +159,41 @@ extension GetterBase: ObservableObject {
     }
   }
   
+  public var didChangePublisher: AnyPublisher<Value, Never> {
+    publisher.dropFirst().eraseToAnyPublisher()
+  }
+  
 }
 
-#endif
-
-public final class EqualityComputer<Value, Key> {
+@available(iOS 13, macOS 10.15, *)
+extension Publisher {
   
-  public static func alwaysDifferent() -> EqualityComputer<Value, Value> {
-    EqualityComputer<Value, Value>.init(selector: { $0 }) { (v, b) -> Bool in
-      return false
+  public func removeDuplicates(_ computer: EqualityComputer<Output>) -> Publishers.Filter<Self> {
+    filter {
+      !computer.isEqual(value: $0)
     }
   }
   
-  private let selector: (Value) -> Key
-  private let equals: (Key, Key) -> Bool
-  
-  private var previousValue: Key?
-  
-  public init(
-    selector: @escaping (Value) -> Key,
-    equals: @escaping (Key, Key) -> Bool
-  ) {
-    
-    self.selector = selector
-    self.equals = equals
-    
-  }
-     
-  func input(value: Value) -> Bool {
-    
-    let key = selector(value)
-    defer {
-      previousValue = key
-    }
-    if let previousValue = previousValue {
-      return equals(previousValue, key)
-    } else {
-      return false
-    }
-    
-  }
-}
-
-extension EqualityComputer where Key : Equatable {
-  public convenience init(selector: @escaping (Value) -> Key) {
-    self.init(selector: selector, equals: ==)
-  }
-}
-
-extension EqualityComputer where Value == Key {
-  
-  public convenience init(equals: @escaping (Key, Key) -> Bool) {
-    self.init(selector: { $0 }, equals: equals)
-  }
-}
-
-extension EqualityComputer where Key : Equatable, Value == Key {
-    
-  public convenience init() {
-    self.init(equals: ==)
-  }
 }
 
 extension Storage {
   
-  @inlinable
-  public func getter<Key, Destination>(
-    selector: @escaping (Value) -> Destination,
-    equality: EqualityComputer<Value, Key>
-  ) -> Getter<Value, Destination> {
+  @available(iOS 13, macOS 10.15, *)
+  public func getter<Output>(
+    filter: EqualityComputer<Value>,
+    map: @escaping (Value) -> Output
+  ) -> GetterSource<Value, Output> {
     
-    var token: EventEmitterSubscribeToken?
+    let pipe = publisher
+      .removeDuplicates(filter)
+      .map(map)
+        
+    let getter = GetterSource<Value, Output>.init(input: pipe)
     
-    let selector = Getter(
-      initialSource: value,
-      selector: selector,
-      equality: equality,
-      onDeinit: { [weak self] in
-        guard let token = token else {
-          assertionFailure()
-          return
-        }
-        self?.remove(subscribe: token)
-    })
-    
-    token = addDidUpdate { [weak selector] (newValue) in
-      selector?._accept(sourceValue: newValue)
-    }
-    
-    return selector
+    return getter
     
   }
+  
 }
+
+#endif

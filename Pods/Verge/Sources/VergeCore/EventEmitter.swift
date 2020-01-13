@@ -32,6 +32,7 @@ public final class EventEmitterSubscribeToken: Hashable {
   }
 }
 
+/// Instead of Combine
 public final class EventEmitter<Event> {
   
   private var __publisher: Any?
@@ -93,8 +94,7 @@ extension EventEmitter {
       
       let anySubscriber = AnySubscriber(subscriber)
       let subscription = Subscription(subscriber: anySubscriber, eventEmitter: eventEmitter)
-      subscriber.receive(subscription: subscription)
-      
+      subscriber.receive(subscription: subscription)      
     }
     
   }

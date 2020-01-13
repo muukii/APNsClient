@@ -70,13 +70,13 @@ struct ContentView: View {
       Group {
         
         Button(action: {
-          self.appContext.stack.service.commit.globalIncrement()
+          self.appContext.stack.service.commit { $0.globalIncrement() }
         }) {
           Text("Global")
         }
         
         Button(action: {
-          self.appContext.stack.service.commit.increment()
+          self.appContext.stack.service.commit { $0.increment() }
         }) {
           Text("Sesson")
         }

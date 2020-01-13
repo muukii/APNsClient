@@ -27,31 +27,26 @@ public protocol DispatcherType {
   associatedtype Activity
   typealias Mutation<Return> = AnyMutation<Self, Return>
   typealias Action<Return> = AnyAction<Self, Return>
-  var dispatchTarget: StoreBase<State, Activity> { get }
+  var target: StoreBase<State, Activity> { get }
   
 }
 
 extension DispatcherType {
-  
-  /// Dummy Method to work Xcode code completion
-  public func accept(_ get: (Self) -> Never) -> Never {
-    fatalError()
-  }
-  
-  ///
-  /// - Parameter get: Return Mutation Object
-  public func accept<Mutation: MutationType>(_ get: (Self) -> Mutation) -> Mutation.Result where Mutation.State == State {
+      
+  /// Run Mutation
+  /// - Parameter get: returns Mutation
+  public func commit<Mutation: MutationType>(_ get: (Self) -> Mutation) -> Mutation.Result where Mutation.State == State {
     let mutation = get(self)
-    return dispatchTarget._receive(
+    return target._receive(
       context: Optional<DispatcherContext<Self>>.none,
       mutation: mutation
     )
   }
-    
+      
   ///
   /// - Parameter get: Return Action object
   @discardableResult
-  public func accept<Action: ActionType>(_ get: (Self) -> Action) -> Action.Result where Action.Dispatcher == Self {
+  public func dispatch<Action: ActionType>(_ get: (Self) -> Action) -> Action.Result where Action.Dispatcher == Self {
     let action = get(self)
     let context = DispatcherContext<Self>.init(
       dispatcher: self,
@@ -61,4 +56,16 @@ extension DispatcherType {
     return action.run(context: context)
   }
 
+}
+
+// MARK: - Xcode Support
+extension DispatcherType {
+  
+  /// Dummy Method to work Xcode code completion
+//  @available(*, unavailable)
+  public func commit(_ get: (Self) -> Never) -> Never { fatalError() }
+  
+  /// Dummy Method to work Xcode code completion
+//  @available(*, unavailable)
+  public func dispatch(_ get: (Self) -> Never) -> Never { fatalError() }
 }

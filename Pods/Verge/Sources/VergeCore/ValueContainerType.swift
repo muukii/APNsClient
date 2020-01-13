@@ -8,11 +8,33 @@
 
 import Foundation
 
-public protocol ValueContainerType {
+public protocol ValueContainerType: AnyObject {
   associatedtype Value
   
-  func getter<Key, Destination>(
-    selector: @escaping (Value) -> Destination,
-    equality: EqualityComputer<Value, Key>
-  ) -> Getter<Value, Destination>
+  var wrappedValue: Value { get }
+  
+  func lock()
+  func unlock()
+  
+  #if canImport(Combine)
+     
+  @available(iOS 13, macOS 10.15, *)
+  func getter<Output>(
+    filter: EqualityComputer<Value>,
+    map: @escaping (Value) -> Output
+  ) -> GetterSource<Value, Output>
+  
+  #endif
+}
+
+extension Storage: ValueContainerType {
+  
+  public func lock() {
+    _lock.lock()
+  }
+
+  public func unlock() {
+    _lock.unlock()
+  }
+    
 }

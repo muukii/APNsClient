@@ -19,86 +19,46 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-
 import Foundation
 
-@propertyWrapper
-public final class Storage<Value>: CustomReflectable, ValueContainerType {
+open class ReadonlyStorage<Value>: CustomReflectable {
     
   private let willUpdateEmitter = EventEmitter<Void>()
   private let didUpdateEmitter = EventEmitter<Value>()
+  private let deinitEmitter = EventEmitter<Void>()
   
-  public var wrappedValue: Value {
+  public final var wrappedValue: Value {
     return value
   }
   
-  public var projectedValue: Storage<Value> {
-    self
-  }
-  
-  public var value: Value {
-    lock.lock()
+  public final var value: Value {
+    _lock.lock()
     defer {
-      lock.unlock()
+      _lock.unlock()
     }
     return nonatomicValue
   }
   
-  private var nonatomicValue: Value
+  fileprivate var nonatomicValue: Value
   
-  private let lock = NSRecursiveLock()
+  let _lock = NSRecursiveLock()
   
-  public init(_ value: Value) {
+  fileprivate let upstreams: [AnyObject]
+  
+  public init(_ value: Value, upstreams: [AnyObject] = []) {
     self.nonatomicValue = value
+    self.upstreams = upstreams
   }
   
-  @discardableResult
-  @inline(__always)
-  public func update<Result>(_ update: (inout Value) throws -> Result) rethrows -> Result {
-    do {
-      let notifyValue: Value
-      lock.lock()
-      notifyValue = nonatomicValue
-      lock.unlock()
-      notifyWillUpdate(value: notifyValue)
-    }
+  deinit {
+    deinitEmitter.accept(())
+  }
     
-    lock.lock()
-    do {
-      let r = try update(&nonatomicValue)
-      let notifyValue = nonatomicValue
-      lock.unlock()
-      notifyDidUpdate(value: notifyValue)
-      return r
-    } catch {
-      lock.unlock()
-      throw error
-    }
-  }
-  
-  public func replace(_ value: Value) {
-    do {
-      let notifyValue: Value
-      lock.lock()
-      notifyValue = nonatomicValue
-      lock.unlock()
-      notifyWillUpdate(value: notifyValue)
-    }
-    
-    do {
-      lock.lock()
-      nonatomicValue = value
-      let notifyValue = nonatomicValue
-      lock.unlock()
-      notifyDidUpdate(value: notifyValue)
-    }
-  }
-  
   /// Register observer with closure.
   /// Storage tells got a newValue.
   /// - Returns: Token to stop subscribing. (Optional) You may need to retain somewhere. But subscription will be disposed when Storage was destructed.
   @discardableResult
-  public func addWillUpdate(subscriber: @escaping () -> Void) -> EventEmitterSubscribeToken {
+  public final func addWillUpdate(subscriber: @escaping () -> Void) -> EventEmitterSubscribeToken {
     willUpdateEmitter.add(subscriber)
   }
   
@@ -106,13 +66,19 @@ public final class Storage<Value>: CustomReflectable, ValueContainerType {
   /// Storage tells got a newValue.
   /// - Returns: Token to stop subscribing. (Optional) You may need to retain somewhere. But subscription will be disposed when Storage was destructed.
   @discardableResult
-  public func addDidUpdate(subscriber: @escaping (Value) -> Void) -> EventEmitterSubscribeToken {
+  public final func addDidUpdate(subscriber: @escaping (Value) -> Void) -> EventEmitterSubscribeToken {
     didUpdateEmitter.add(subscriber)
   }
   
-  public func remove(subscribe token: EventEmitterSubscribeToken) {
+  @discardableResult
+  public final func addDeinit(subscriber: @escaping () -> Void) -> EventEmitterSubscribeToken {
+    deinitEmitter.add(subscriber)
+  }
+  
+  public final func remove(subscribe token: EventEmitterSubscribeToken) {
     didUpdateEmitter.remove(token)
     willUpdateEmitter.remove(token)
+    deinitEmitter.remove(token)
   }
     
   @inline(__always)
@@ -135,14 +101,83 @@ public final class Storage<Value>: CustomReflectable, ValueContainerType {
   
 }
 
-extension Storage {
+open class Storage<Value>: ReadonlyStorage<Value> {
   
-  public func map<U>(selector: @escaping (Value) -> U) -> Storage<U> {
-    let initialValue = selector(value)
-    let newStorage = Storage<U>.init(initialValue)
-    self.addDidUpdate { (newValue) in
-      newStorage.replace(selector(newValue))
+  @discardableResult
+  @inline(__always)
+  public final func update<Result>(_ update: (inout Value) throws -> Result) rethrows -> Result {
+    let signpost = VergeSignpostTransaction("Storage.update")
+    defer {
+      signpost.end()
     }
+    do {
+      let notifyValue: Value
+      _lock.lock()
+      notifyValue = nonatomicValue
+      _lock.unlock()
+      notifyWillUpdate(value: notifyValue)
+    }
+    
+    _lock.lock()
+    do {
+      let r = try update(&nonatomicValue)
+      let notifyValue = nonatomicValue
+      _lock.unlock()
+      notifyDidUpdate(value: notifyValue)
+      return r
+    } catch {
+      _lock.unlock()
+      throw error
+    }
+  }
+  
+  public final func replace(_ value: Value) {
+    do {
+      let notifyValue: Value
+      _lock.lock()
+      notifyValue = nonatomicValue
+      _lock.unlock()
+      notifyWillUpdate(value: notifyValue)
+    }
+    
+    do {
+      _lock.lock()
+      nonatomicValue = value
+      let notifyValue = nonatomicValue
+      _lock.unlock()
+      notifyDidUpdate(value: notifyValue)
+    }
+  }
+  
+}
+
+extension ReadonlyStorage {
+  
+  /// Transform value with filtering.
+  /// - Attention: Retains upstream storage
+  public func map<U>(
+    onUpdated: @escaping (Value) -> Void = { _ in },
+    onPassed: @escaping (Value) -> Void = { _ in },
+    filter: @escaping (Value) -> Bool = { _ in false },
+    transform: @escaping (Value) -> U
+  ) -> ReadonlyStorage<U> {
+    
+    let initialValue = transform(value)
+    let newStorage = Storage<U>.init(initialValue, upstreams: [self])
+    
+    let token = addDidUpdate { [weak newStorage] (newValue) in
+      guard !filter(newValue) else {
+        onPassed(newValue)
+        return
+      }
+      newStorage?.replace(transform(newValue))
+      onUpdated(newValue)
+    }
+    
+    newStorage.addDeinit { [weak self] in
+      self?.remove(subscribe: token)
+    }
+    
     return newStorage
   }
 }

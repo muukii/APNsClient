@@ -28,12 +28,12 @@ import VergeCore
 /// A metadata object that indicates the name of the mutation and where it was caused.
 public struct MutationMetadata {
   
-  public let name: StaticString
+  public let name: String
   public let file: StaticString
   public let function: StaticString
   public let line: UInt
   
-  public init(name: StaticString, file: StaticString, function: StaticString, line: UInt) {
+  public init(name: String, file: StaticString, function: StaticString, line: UInt) {
     self.name = name
     self.file = file
     self.function = function
@@ -44,12 +44,12 @@ public struct MutationMetadata {
 /// A metadata object that indicates the name of the action and where it was caused.
 public struct ActionMetadata {
   
-  public let name: StaticString
+  public let name: String
   public let file: StaticString
   public let function: StaticString
   public let line: UInt
   
-  public init(name: StaticString, file: StaticString, function: StaticString, line: UInt) {
+  public init(name: String, file: StaticString, function: StaticString, line: UInt) {
     self.name = name
     self.file = file
     self.function = function
@@ -84,7 +84,7 @@ public typealias NoActivityStoreBase<State> = StoreBase<State, Never>
 ///   }
 /// }
 /// ```
-open class StoreBase<State, Activity>: CustomReflectable, VergeStoreType, ValueContainerType {
+open class StoreBase<State, Activity>: CustomReflectable, VergeStoreType {
   
   public typealias Dispatcher = DispatcherBase<State, Activity>
   
@@ -126,11 +126,17 @@ open class StoreBase<State, Activity>: CustomReflectable, VergeStoreType, ValueC
     
     let startedTime = CFAbsoluteTimeGetCurrent()
     var currentState: State!
+    
+    let signpost = VergeSignpostTransaction("Store.commit")
+    
     let returnValue = _backingStorage.update { (state) -> Mutation.Result in
       let r = mutation.mutate(state: &state)
       currentState = state
       return r
     }
+    
+    signpost.end()
+    
     let elapsed = CFAbsoluteTimeGetCurrent() - startedTime
     
     logger?.didCommit(store: self, state: currentState!, mutation: mutation, context: context, time: elapsed)
@@ -159,57 +165,6 @@ open class StoreBase<State, Activity>: CustomReflectable, VergeStoreType, ValueC
 import Foundation
 import Combine
 
-fileprivate var _willChangeAssociated: Void?
-fileprivate var _didChangeAssociated: Void?
-
-@available(iOS 13.0, macOS 10.15, *)
-extension Storage: ObservableObject {
-  
-  public var objectWillChange: ObservableObjectPublisher {
-    if let associated = objc_getAssociatedObject(self, &_willChangeAssociated) as? ObservableObjectPublisher {
-      return associated
-    } else {
-      let associated = ObservableObjectPublisher()
-      objc_setAssociatedObject(self, &_willChangeAssociated, associated, .OBJC_ASSOCIATION_RETAIN)
-      
-      addWillUpdate {
-        if Thread.isMainThread {
-          associated.send()
-        } else {
-          DispatchQueue.main.async {
-            associated.send()
-          }
-        }
-      }
-      
-      return associated
-    }
-  }
-  
-  public var didChangePublisher: AnyPublisher<Value, Never> {
-    
-    if let associated = objc_getAssociatedObject(self, &_didChangeAssociated) as? PassthroughSubject<Value, Never> {
-      return associated.eraseToAnyPublisher()
-    } else {
-      let associated = PassthroughSubject<Value, Never>()
-      objc_setAssociatedObject(self, &_didChangeAssociated, associated, .OBJC_ASSOCIATION_RETAIN)
-      
-      addDidUpdate { s in
-        if Thread.isMainThread {
-          associated.send(s)
-        } else {
-          DispatchQueue.main.async {
-            associated.send(s)
-          }
-        }
-      }
-      
-      return associated.eraseToAnyPublisher()
-    }
-  }
-  
-}
-
 @available(iOS 13.0, macOS 10.15, *)
 extension StoreBase: ObservableObject {
   
@@ -229,6 +184,16 @@ extension StoreBase {
   
   public var activityPublisher: EventEmitter<Activity>.Publisher {
     _eventEmitter.publisher
+  }
+  
+  @available(iOS 13, macOS 10.15, *)
+  public func getter<Output>(
+    filter: EqualityComputer<Value>,
+    map: @escaping (Value) -> Output
+  ) -> GetterSource<Value, Output> {
+    
+    _backingStorage.getter(filter: filter, map: map)
+    
   }
 }
 

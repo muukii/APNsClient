@@ -28,16 +28,18 @@ struct MainTabView: View {
   }
   
   private func send(_ editing: UIState.EditingPush) {
-    self.context.stack.service.dispatch.send(
-      keyID: editing.data.keyID,
-      teamID: editing.data.teamID,
-      topic: editing.data.bundleID,
-      enviroment: editing.data.enviroment.asAPN,
-      payload: editing.data.payload,
-      deviceToken: editing.data.deviceToken
-    )
+    self.context.stack.service.dispatch {
+      $0.send(
+        keyID: editing.data.keyID,
+        teamID: editing.data.teamID,
+        topic: editing.data.bundleID,
+        enviroment: editing.data.enviroment.asAPN,
+        payload: editing.data.payload,
+        deviceToken: editing.data.deviceToken
+      )
+    }
   }
-    
+  
   private func currentEditor() -> AnyView {
     
     if let id = selected {
@@ -48,14 +50,14 @@ struct MainTabView: View {
             self.uiState.editingPush(by: id)!
         },
           set: { editing in
-            self.uiDispatcher.dispatch.updateEditingPush(editing)
+            self.uiDispatcher.dispatch { $0.updateEditingPush(editing) }
         }), onRequestedSend: { editing in
           self.send(editing)
       }, onRequestedDelete: { editing in
         if self.selected == editing.id {
           self.selected = nil
         }
-        self.uiDispatcher.dispatch.deleteEditingPush(editing)
+        self.uiDispatcher.dispatch { $0.deleteEditingPush(editing) }
       })
       )
     } else {
@@ -70,7 +72,7 @@ struct MainTabView: View {
       panel.begin { (response) in
         guard response == .OK else { return }
         let url = panel.urls.first!
-        self.context.stack.service.commit.setP8FileURL(url)
+        self.context.stack.service.commit { $0.setP8FileURL(url) }
       }
     }) {
       Text("Select p8 file")
@@ -79,7 +81,7 @@ struct MainTabView: View {
   
   private func newTabView() -> some View {
     Button(action: {
-      self.uiDispatcher.dispatch.addTab()
+      self.uiDispatcher.dispatch { $0.addTab() }
     }) {
       Text("New Push")
     }
