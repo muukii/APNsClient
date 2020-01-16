@@ -23,7 +23,7 @@ import Foundation
 
 public protocol DispatcherType {
     
-  associatedtype State
+  associatedtype State: StateType
   associatedtype Activity
   typealias Mutation<Return> = AnyMutation<Self, Return>
   typealias Action<Return> = AnyAction<Self, Return>
@@ -54,6 +54,21 @@ extension DispatcherType {
       parent: nil
     )
     return action.run(context: context)
+  }
+  
+  @discardableResult
+  public func dispatchInline<Result>(
+    _ name: String = "",
+    _ file: StaticString = #file,
+    _ function: StaticString = #function,
+    _ line: UInt = #line,
+    _ action: @escaping ((DispatcherContext<Self>) -> Result)
+  ) -> Result {
+    
+    dispatch { _ in
+      Action(name, file, function, line, action)
+    }
+    
   }
 
 }

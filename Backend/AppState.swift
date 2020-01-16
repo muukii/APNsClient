@@ -30,6 +30,6 @@ public struct SessionState: Identifiable {
 
 public final class Store: StoreBase<AppState, Never> {
   init() {
-    super.init(initialState: .init(), logger: DefaultLogger.shared)
+    super.init(initialState: .init(), logger: DefaultStoreLogger.shared)
   }
 }

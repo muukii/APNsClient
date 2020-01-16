@@ -19,13 +19,23 @@ public protocol ValueContainerType: AnyObject {
   #if canImport(Combine)
      
   @available(iOS 13, macOS 10.15, *)
-  func getter<Output>(
-    filter: EqualityComputer<Value>,
+  func makeGetter<Output>(
+    filter: @escaping (Value) -> Bool,
     map: @escaping (Value) -> Output
   ) -> GetterSource<Value, Output>
   
   #endif
 }
+
+#if canImport(Combine)
+extension ValueContainerType {
+  
+  @available(iOS 13, macOS 10.15, *)
+  public func makeGetter() -> GetterSource<Value, Value> {
+    makeGetter(filter: { _ in true }, map: { $0 })
+  }
+}
+#endif
 
 extension Storage: ValueContainerType {
   

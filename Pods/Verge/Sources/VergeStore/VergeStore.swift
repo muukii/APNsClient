@@ -58,7 +58,7 @@ public struct ActionMetadata {
 }
 
 /// A protocol to register logger and get the event VergeStore emits.
-public protocol VergeStoreLogger {
+public protocol StoreLogger {
   
   func willCommit(store: AnyObject, state: Any, mutation: MutationBaseType, context: Any?)
   func didCommit(store: AnyObject, state: Any, mutation: MutationBaseType, context: Any?, time: CFTimeInterval)
@@ -68,12 +68,14 @@ public protocol VergeStoreLogger {
   func didDestroyDispatcher(store: AnyObject, dispatcher: Any)
 }
 
-public protocol VergeStoreType: AnyObject {
-  associatedtype State
-  associatedtype Activity  
+public protocol StoreType: AnyObject {
+  associatedtype State: StateType
+  associatedtype Activity
+  
+  func asStoreBase() -> StoreBase<State, Activity>
 }
 
-public typealias NoActivityStoreBase<State> = StoreBase<State, Never>
+public typealias NoActivityStoreBase<State: StateType> = StoreBase<State, Never>
 
 /// A base object to create store.
 /// You may create subclass of VergeDefaultStore
@@ -84,11 +86,13 @@ public typealias NoActivityStoreBase<State> = StoreBase<State, Never>
 ///   }
 /// }
 /// ```
-open class StoreBase<State, Activity>: CustomReflectable, VergeStoreType {
+open class StoreBase<State: StateType, Activity>: CustomReflectable, StoreType, DispatcherType {
   
   public typealias Dispatcher = DispatcherBase<State, Activity>
   
   public typealias Value = State
+  
+  public var target: StoreBase<State, Activity> { self }
     
   /// A current state.
   public var state: State {
@@ -100,7 +104,7 @@ open class StoreBase<State, Activity>: CustomReflectable, VergeStoreType {
   public let _backingStorage: Storage<State>
   public let _eventEmitter: EventEmitter<Activity> = .init()
   
-  public private(set) var logger: VergeStoreLogger?
+  public private(set) var logger: StoreLogger?
     
   /// An initializer
   /// - Parameters:
@@ -108,7 +112,7 @@ open class StoreBase<State, Activity>: CustomReflectable, VergeStoreType {
   ///   - logger: You can also use `DefaultLogger.shared`.
   public init(
     initialState: State,
-    logger: VergeStoreLogger?
+    logger: StoreLogger?
   ) {
     
     self._backingStorage = .init(initialState)
@@ -157,6 +161,10 @@ open class StoreBase<State, Activity>: CustomReflectable, VergeStoreType {
       displayStyle: .struct
     )
   }
+  
+  public func asStoreBase() -> StoreBase<State, Activity> {
+    self
+  }
       
 }
 
@@ -187,12 +195,12 @@ extension StoreBase {
   }
   
   @available(iOS 13, macOS 10.15, *)
-  public func getter<Output>(
-    filter: EqualityComputer<Value>,
+  public func makeGetter<Output>(
+    filter: @escaping (Value) -> Bool,
     map: @escaping (Value) -> Output
   ) -> GetterSource<Value, Output> {
     
-    _backingStorage.getter(filter: filter, map: map)
+    _backingStorage.makeGetter(filter: filter, map: map)
     
   }
 }
