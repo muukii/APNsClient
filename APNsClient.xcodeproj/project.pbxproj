@@ -133,7 +133,6 @@
 			children = (
 				4B7F38672389749D000B9ACF /* Models */,
 				4B7F386023897288000B9ACF /* Views */,
-				4BF9A12B238854FD0045AA58 /* Backend */,
 				4B1121C12385F1D200C7517E /* AppDelegate.swift */,
 				4B1121C52385F1D500C7517E /* Assets.xcassets */,
 				4B1121CA2385F1D500C7517E /* Main.storyboard */,
@@ -182,13 +181,6 @@
 				4B7F3882238979D2000B9ACF /* SessionService.swift */,
 				4B7F38712389761D000B9ACF /* Service.h */,
 				4B7F38722389761D000B9ACF /* Info.plist */,
-			);
-			path = Backend;
-			sourceTree = "<group>";
-		};
-		4BF9A12B238854FD0045AA58 /* Backend */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			path = Backend;
 			sourceTree = "<group>";

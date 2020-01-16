@@ -14,9 +14,9 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D25AD7A76C74C9667D5EF83A0D85A5C6"
-               BuildableName = "VergeStore.framework"
-               BlueprintName = "VergeStore"
+               BlueprintIdentifier = "74B462085E35CA2929210D22C2FADEE7"
+               BuildableName = "Verge.framework"
+               BlueprintName = "Verge"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

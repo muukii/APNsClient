@@ -1,22 +1,24 @@
 PODS:
-  - VergeStore/Core (6.0.0-alpha.1)
+  - Verge/Core (6.0.0-beta.8)
+  - Verge/Store (6.0.0-beta.8):
+    - Verge/Core
 
 DEPENDENCIES:
-  - "VergeStore/Core (from `git@github.com:muukii/Verge`, branch `master`)"
+  - "Verge/Store (from `git@github.com:muukii/Verge`, branch `master`)"
 
 EXTERNAL SOURCES:
-  VergeStore:
+  Verge:
     :branch: master
     :git: "git@github.com:muukii/Verge"
 
 CHECKOUT OPTIONS:
-  VergeStore:
-    :commit: c0f5027ab5ceb389558526ffd529dda510215cc9
+  Verge:
+    :commit: 31782c9ee4c9f1c99e15d75fa1f1173a9723be1c
     :git: "git@github.com:muukii/Verge"
 
 SPEC CHECKSUMS:
-  VergeStore: e434facf5076298372555075afa66ba302b8de09
+  Verge: 5e14f5dab89136a309dd50476aee4b6a4766f8e2
 
-PODFILE CHECKSUM: 64cac899f962782099cc0c8bf715e05a8f2e0760
+PODFILE CHECKSUM: 103584b4cd339325ec79e294f126ddee8b62eb67
 
 COCOAPODS: 1.8.4

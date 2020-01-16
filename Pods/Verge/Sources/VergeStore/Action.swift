@@ -21,24 +21,50 @@
 
 import Foundation
 
-public protocol StateType {
+public protocol ActionBaseType {
   
 }
 
-extension StateType {
+public protocol ActionType: ActionBaseType {
   
-  public mutating func update<T: _VergeStore_OptionalProtocol>(target keyPath: WritableKeyPath<Self, T>, update: (inout T.Wrapped) throws -> Void) rethrows {
-    guard self[keyPath: keyPath]._vergestore_wrappedValue != nil else { return }
-    try update(&self[keyPath: keyPath]._vergestore_wrappedValue!)
+  associatedtype Dispatcher: DispatcherType
+  associatedtype Result
+  func run(context: DispatcherContext<Dispatcher>) -> Result
+}
+
+public struct AnyAction<Dispatcher: DispatcherType, Result>: ActionType {
+  
+  let _action: (DispatcherContext<Dispatcher>) -> Result
+  public let metadata: ActionMetadata
+  
+  public init(
+    _ name: String = "",
+    _ file: StaticString = #file,
+    _ function: StaticString = #function,
+    _ line: UInt = #line,
+    _ action: @escaping (DispatcherContext<Dispatcher>) -> Result
+  ) {
+    
+    self.metadata = .init(name: name, file: file, function: function, line: line)
+    self._action = action
+    
   }
   
-  public mutating func update<T>(target keyPath: WritableKeyPath<Self, T>, update: (inout T) throws -> Void) rethrows {
-    try update(&self[keyPath: keyPath])
+  public func run(context: DispatcherContext<Dispatcher>) -> Result {
+    _action(context)
   }
+}
+
+extension AnyAction {
   
-  public mutating func update(update: (inout Self) throws -> Void) rethrows {
-    try update(&self)
+  public static func action(
+    _ name: String = "",
+    _ file: StaticString = #file,
+    _ function: StaticString = #function,
+    _ line: UInt = #line,
+    _ action: @escaping (DispatcherContext<Dispatcher>) -> Result
+  ) -> Self {
+    self.init(name, file, function, line, action)
   }
   
 }
-

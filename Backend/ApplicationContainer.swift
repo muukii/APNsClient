@@ -8,7 +8,7 @@
 
 import Foundation
 
-import VergeStore
+import Verge
 
 public enum ApplicationContainer {
   public static let store = Store()
@@ -18,33 +18,26 @@ public enum ApplicationContainer {
   public static var activeContexts: [AppContext] = []
   
   public static func makeContext() -> AppContext {
-    let id = dispatcher.commit.makeSessionState()
+    let id = dispatcher.accept { $0.makeSessionState() }
     let context = AppContext(sessionStateID: id)
     activeContexts.append(context)
     return context
   }
 }
 
-public final class ApplicationDispatcher: Dispatcher<AppState> {
+public final class ApplicationDispatcher: Store.Dispatcher {
   
   fileprivate init() {
     super.init(target: ApplicationContainer.store)
   }
    
-}
-
-extension Mutations where Base : ApplicationDispatcher {
-  
-  public func makeSessionState() -> SessionState.ID {
-    
-    let state = SessionState()
-    
-    descriptor.commit {
+  public func makeSessionState() -> Mutation<SessionState.ID> {
+    return .mutation {
+      let state = SessionState()
       $0.sessions[state.id] = state
+      return state.id
     }
-    
-    return state.id
-    
+          
   }
 }
 
