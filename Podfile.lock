@@ -1,6 +1,6 @@
 PODS:
-  - Verge/Core (6.0.0-beta.8)
-  - Verge/Store (6.0.0-beta.8):
+  - Verge/Core (7.0.0-beta.18)
+  - Verge/Store (7.0.0-beta.18):
     - Verge/Core
 
 DEPENDENCIES:
@@ -13,11 +13,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Verge:
-    :commit: 31782c9ee4c9f1c99e15d75fa1f1173a9723be1c
+    :commit: ff12324ccf14f389528f3f16cf6d716ec5960b80
     :git: "git@github.com:muukii/Verge"
 
 SPEC CHECKSUMS:
-  Verge: 5e14f5dab89136a309dd50476aee4b6a4766f8e2
+  Verge: 9e1a316e6ba7198a8b1a9bd2113d586fb0f91505
 
 PODFILE CHECKSUM: 103584b4cd339325ec79e294f126ddee8b62eb67
 

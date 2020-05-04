@@ -1,6 +1,6 @@
 {
   "name": "Verge",
-  "version": "6.0.0-beta.8",
+  "version": "7.0.0-beta.18",
   "summary": "Verge is a state management tools",
   "description": "Verge is a state management tools (Store, ViewModel, ORM, Reactive) on iOS App (UIKit / SwiftUI)",
   "license": "MIT",
@@ -14,10 +14,10 @@
   },
   "source": {
     "git": "https://github.com/muukii/Verge.git",
-    "tag": "6.0.0-beta.8"
+    "tag": "7.0.0-beta.18"
   },
   "homepage": "https://github.com/muukii/Verge",
-  "swift_versions": "5.1",
+  "swift_versions": "5.2",
   "default_subspecs": "Core",
   "weak_frameworks": [
     "Combine"
@@ -27,13 +27,13 @@
       "name": "Classic",
       "dependencies": {
         "RxSwift": [
-          "~> 5.0.0"
+          "~> 5"
         ],
         "RxCocoa": [
-          "~> 5.0.0"
+          "~> 5"
         ],
         "RxRelay": [
-          "~> 5.0.0"
+          "~> 5"
         ],
         "Verge/Core": [
 
@@ -67,13 +67,13 @@
 
         ],
         "RxSwift": [
-          "~> 5.0.0"
+          "~> 5"
         ],
         "RxCocoa": [
-          "~> 5.0.0"
+          "~> 5"
         ],
         "RxRelay": [
-          "~> 5.0.0"
+          "~> 5"
         ]
       },
       "source_files": "Sources/VergeRx/**/*.swift"
@@ -82,11 +82,11 @@
       "name": "ORM",
       "source_files": "Sources/VergeORM/**/*.swift",
       "dependencies": {
-        "Verge/Core": [
+        "Verge/Store": [
 
         ]
       }
     }
   ],
-  "swift_version": "5.1"
+  "swift_version": "5.2"
 }

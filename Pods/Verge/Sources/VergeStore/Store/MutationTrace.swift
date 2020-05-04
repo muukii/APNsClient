@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2019 muukii
+// Copyright (c) 2020 muukii
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,25 +21,13 @@
 
 import Foundation
 
-#if COCOAPODS || canImport(VergeCore)
-
-#if !COCOAPODS
-import VergeCore
-#endif
-
-extension StoreBase: ValueContainerType {
-  public func lock() {
-    _backingStorage.lock()
-  }
-  
-  public func unlock() {
-    _backingStorage.unlock()
-  }
+/// A trace that indicates the mutation where comes from.
+public struct MutationTrace: Encodable {
     
-  public var wrappedValue: State {
-    _read { yield state }
-  }
-    
+  public let createdAt: Date = .init()
+  public let name: String
+  public let file: String
+  public let function: String
+  public let line: UInt
+
 }
-
-#endif

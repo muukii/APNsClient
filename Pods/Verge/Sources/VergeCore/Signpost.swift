@@ -2,7 +2,7 @@ import os
 
 @available(iOS 12, macOS 10.14, *)
 @usableFromInline
-enum Static {
+enum SignpostConstants {
   @usableFromInline
   static let performanceLog = OSLog(subsystem: "me.muukii.Verge", category: "performance")
   @usableFromInline
@@ -11,38 +11,62 @@ enum Static {
 
 @inlinable
 public func vergeSignpostEvent(_ event: StaticString) {
+  #if DEBUG
   if #available(iOS 12, macOS 10.14, *) {
-    os_signpost(.event, log: Static.activityLog, name: event)
+    let id = OSSignpostID(log: SignpostConstants.activityLog)
+    os_signpost(.event, log: SignpostConstants.activityLog, name: event, signpostID: id)
   }
+  #endif
 }
+
+@inlinable
+public func vergeSignpostEvent(_ event: StaticString, label: String) {
+  #if DEBUG
+  if #available(iOS 12, macOS 10.14, *) {
+    let id = OSSignpostID(log: SignpostConstants.activityLog)
+    os_signpost(.event, log: SignpostConstants.activityLog, name: event, signpostID: id, "%@", label)
+  }
+  #endif
+}
+
 
 public struct VergeSignpostTransaction {
   
   @usableFromInline
   let _end: () -> Void
   
+  @inlinable
   public init(_ name: StaticString) {
+    #if DEBUG
     if #available(iOS 12, macOS 10.14, *) {
-      let id = OSSignpostID(log: Static.performanceLog)
-      os_signpost(.begin, log: Static.performanceLog, name: name, signpostID: id)
+      let id = OSSignpostID(log: SignpostConstants.performanceLog)
+      os_signpost(.begin, log: SignpostConstants.performanceLog, name: name, signpostID: id)
       _end = {
-        os_signpost(.end, log: Static.performanceLog, name: name, signpostID: id)
+        os_signpost(.end, log: SignpostConstants.performanceLog, name: name, signpostID: id)
       }
     } else {
       _end = {}
     }
+    #else
+    _end = {}
+    #endif
   }
   
-  public init(_ name: StaticString, format: StaticString, arguments: CVarArg...) {
+  @inlinable
+  public init(_ name: StaticString, label: String) {
+    #if DEBUG
     if #available(iOS 12, macOS 10.14, *) {
-      let id = OSSignpostID(log: Static.performanceLog)
-      os_signpost(.begin, log: Static.performanceLog, name: name, signpostID: id, format, arguments)
+      let id = OSSignpostID(log: SignpostConstants.performanceLog)
+      os_signpost(.begin, log: SignpostConstants.performanceLog, name: name, signpostID: id, "Begin: %@", label)
       _end = {
-        os_signpost(.end, log: Static.performanceLog, name: name, signpostID: id, format, arguments)
+        os_signpost(.end, log: SignpostConstants.performanceLog, name: name, signpostID: id, "End: %@", label)
       }
     } else {
       _end = {}
     }
+    #else
+    _end = {}
+    #endif
   }
     
   @inlinable

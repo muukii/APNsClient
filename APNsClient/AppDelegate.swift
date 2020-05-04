@@ -23,9 +23,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let context = ApplicationContainer.makeContext()
     let uiDispatcher = SessionUIDispatcher(sessionStateID: context.sessionStateID)
     
-    let rootView = RootView(context: context)
+    let rootView = RootView(uiDispatcher: uiDispatcher, context: context)
       .environmentObject(ApplicationContainer.store)
-      .environmentObject(uiDispatcher)
         
     ProcessInfo.processInfo.disableAutomaticTermination("")
 

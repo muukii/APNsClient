@@ -26,7 +26,7 @@ open class ReadonlyStorage<Value>: CustomReflectable {
   private let willUpdateEmitter = EventEmitter<Void>()
   private let didUpdateEmitter = EventEmitter<Value>()
   private let deinitEmitter = EventEmitter<Void>()
-  
+    
   public final var wrappedValue: Value {
     return value
   }
@@ -41,24 +41,36 @@ open class ReadonlyStorage<Value>: CustomReflectable {
   
   fileprivate var nonatomicValue: Value
   
-  let _lock = NSRecursiveLock()
+  private let _lock = NSRecursiveLock()
   
   fileprivate let upstreams: [AnyObject]
   
   public init(_ value: Value, upstreams: [AnyObject] = []) {
     self.nonatomicValue = value
     self.upstreams = upstreams
+    
+    willUpdateEmitter.add {
+      vergeSignpostEvent("Storage.willUpdate")
+    }
   }
   
   deinit {
     deinitEmitter.accept(())
+  }
+  
+  public func lock() {
+    _lock.lock()
+  }
+  
+  public func unlock() {
+    _lock.unlock()
   }
     
   /// Register observer with closure.
   /// Storage tells got a newValue.
   /// - Returns: Token to stop subscribing. (Optional) You may need to retain somewhere. But subscription will be disposed when Storage was destructed.
   @discardableResult
-  public final func addWillUpdate(subscriber: @escaping () -> Void) -> EventEmitterSubscribeToken {
+  public final func addWillUpdate(subscriber: @escaping () -> Void) -> EventEmitterCancellable {
     willUpdateEmitter.add(subscriber)
   }
   
@@ -66,16 +78,16 @@ open class ReadonlyStorage<Value>: CustomReflectable {
   /// Storage tells got a newValue.
   /// - Returns: Token to stop subscribing. (Optional) You may need to retain somewhere. But subscription will be disposed when Storage was destructed.
   @discardableResult
-  public final func addDidUpdate(subscriber: @escaping (Value) -> Void) -> EventEmitterSubscribeToken {
+  public final func addDidUpdate(subscriber: @escaping (Value) -> Void) -> EventEmitterCancellable {
     didUpdateEmitter.add(subscriber)
   }
   
   @discardableResult
-  public final func addDeinit(subscriber: @escaping () -> Void) -> EventEmitterSubscribeToken {
+  public final func addDeinit(subscriber: @escaping () -> Void) -> EventEmitterCancellable {
     deinitEmitter.add(subscriber)
   }
   
-  public final func remove(subscribe token: EventEmitterSubscribeToken) {
+  public final func remove(_ token: EventEmitterCancellable) {
     didUpdateEmitter.remove(token)
     willUpdateEmitter.remove(token)
     deinitEmitter.remove(token)
@@ -103,6 +115,8 @@ open class ReadonlyStorage<Value>: CustomReflectable {
 
 open class Storage<Value>: ReadonlyStorage<Value> {
   
+  private var notificationFilter: (Value) -> Bool = { _ in true }
+  
   @discardableResult
   @inline(__always)
   public final func update<Result>(_ update: (inout Value) throws -> Result) rethrows -> Result {
@@ -112,43 +126,40 @@ open class Storage<Value>: ReadonlyStorage<Value> {
     }
     do {
       let notifyValue: Value
-      _lock.lock()
+      lock()
       notifyValue = nonatomicValue
-      _lock.unlock()
-      notifyWillUpdate(value: notifyValue)
+      unlock()
+      if notificationFilter(notifyValue) {
+        notifyWillUpdate(value: notifyValue)
+      }
     }
     
-    _lock.lock()
+    lock()
     do {
       let r = try update(&nonatomicValue)
       let notifyValue = nonatomicValue
-      _lock.unlock()
-      notifyDidUpdate(value: notifyValue)
+      unlock()
+      // TODO: cause cracking the order of event
+      if notificationFilter(notifyValue) {
+        notifyDidUpdate(value: notifyValue)
+      }
       return r
     } catch {
-      _lock.unlock()
+      unlock()
       throw error
     }
   }
-  
-  public final func replace(_ value: Value) {
-    do {
-      let notifyValue: Value
-      _lock.lock()
-      notifyValue = nonatomicValue
-      _lock.unlock()
-      notifyWillUpdate(value: notifyValue)
-    }
     
-    do {
-      _lock.lock()
-      nonatomicValue = value
-      let notifyValue = nonatomicValue
-      _lock.unlock()
-      notifyDidUpdate(value: notifyValue)
-    }
+  /// Filter to supress update notifications
+  /// - Parameter filter: Return true, notification will emit.
+  public final func setNotificationFilter(_ filter: @escaping (Value) -> Bool) {
+    notificationFilter = filter
   }
-  
+     
+}
+
+public final class StateStorage<Value>: Storage<Value> {
+
 }
 
 extension ReadonlyStorage {
@@ -156,8 +167,6 @@ extension ReadonlyStorage {
   /// Transform value with filtering.
   /// - Attention: Retains upstream storage
   public func map<U>(
-    onUpdated: @escaping (Value) -> Void = { _ in },
-    onPassed: @escaping (Value) -> Void = { _ in },
     filter: @escaping (Value) -> Bool = { _ in false },
     transform: @escaping (Value) -> U
   ) -> ReadonlyStorage<U> {
@@ -167,17 +176,74 @@ extension ReadonlyStorage {
     
     let token = addDidUpdate { [weak newStorage] (newValue) in
       guard !filter(newValue) else {
-        onPassed(newValue)
         return
       }
-      newStorage?.replace(transform(newValue))
-      onUpdated(newValue)
+      newStorage?.update {
+        $0 = transform(newValue)
+      }
     }
     
     newStorage.addDeinit { [weak self] in
-      self?.remove(subscribe: token)
+      self?.remove(token)
     }
     
     return newStorage
   }
 }
+
+#if canImport(Combine)
+
+import Combine
+
+// MARK: - Integrate with Combine
+
+fileprivate var _willChangeAssociated: Void?
+fileprivate var _didChangeAssociated: Void?
+
+@available(iOS 13.0, macOS 10.15, *)
+extension Storage: ObservableObject {
+  
+  public var objectWillChange: ObservableObjectPublisher {
+    if let associated = objc_getAssociatedObject(self, &_willChangeAssociated) as? ObservableObjectPublisher {
+      return associated
+    } else {
+      let associated = ObservableObjectPublisher()
+      objc_setAssociatedObject(self, &_willChangeAssociated, associated, .OBJC_ASSOCIATION_RETAIN)
+      
+      addWillUpdate {
+        if Thread.isMainThread {
+          associated.send()
+        } else {
+          DispatchQueue.main.async {
+            associated.send()
+          }
+        }
+      }
+      
+      return associated
+    }
+  }
+  
+  public var objectDidChange: AnyPublisher<Value, Never> {
+    valuePublisher.dropFirst().eraseToAnyPublisher()
+  }
+  
+  public var valuePublisher: AnyPublisher<Value, Never> {
+    
+    if let associated = objc_getAssociatedObject(self, &_didChangeAssociated) as? CurrentValueSubject<Value, Never> {
+      return associated.eraseToAnyPublisher()
+    } else {
+      let associated = CurrentValueSubject<Value, Never>(value)
+      objc_setAssociatedObject(self, &_didChangeAssociated, associated, .OBJC_ASSOCIATION_RETAIN)
+      
+      addDidUpdate { s in
+        associated.send(s)
+      }
+      
+      return associated.eraseToAnyPublisher()
+    }
+  }
+    
+}
+
+#endif

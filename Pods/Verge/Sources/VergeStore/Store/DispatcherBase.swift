@@ -19,52 +19,50 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Foundation
-
-public protocol ActionBaseType {
+open class ScopedDispatcherBase<State, Activity, Scope>: DispatcherType {
+      
+  public let scope: WritableKeyPath<State, Scope>
   
-}
-
-public protocol ActionType: ActionBaseType {
+  public let store: Store<State, Activity>
   
-  associatedtype Dispatcher: DispatcherType
-  associatedtype Result
-  func run(context: DispatcherContext<Dispatcher>) -> Result
-}
-
-public struct AnyAction<Dispatcher: DispatcherType, Result>: ActionType {
+  public var state: Scope {
+    return store.state[keyPath: scope]
+  }
   
-  let _action: (DispatcherContext<Dispatcher>) -> Result
-  public let metadata: ActionMetadata
+  /// Returns current state from target store
+  public var rootState: State {
+    return store.state
+  }
+   
+  private var logger: StoreLogger? {
+    store.logger
+  }
   
   public init(
-    _ name: String = "",
-    _ file: StaticString = #file,
-    _ function: StaticString = #function,
-    _ line: UInt = #line,
-    _ action: @escaping (DispatcherContext<Dispatcher>) -> Result
+    targetStore: Store<State, Activity>,
+    scope: WritableKeyPath<State, Scope>
   ) {
-    
-    self.metadata = .init(name: name, file: file, function: function, line: line)
-    self._action = action
-    
+    self.store = targetStore
+    self.scope = scope
+      
+    let log = DidCreateDispatcherLog(store: targetStore, dispatcher: self)    
+    logger?.didCreateDispatcher(log: log)
   }
-  
-  public func run(context: DispatcherContext<Dispatcher>) -> Result {
-    _action(context)
+     
+  deinit {
+    let log = DidDestroyDispatcherLog(store: store, dispatcher: self)
+    logger?.didDestroyDispatcher(log: log)
   }
+    
 }
 
-extension AnyAction {
-  
-  public static func action(
-    _ name: String = "",
-    _ file: StaticString = #file,
-    _ function: StaticString = #function,
-    _ line: UInt = #line,
-    _ action: @escaping (DispatcherContext<Dispatcher>) -> Result
-  ) -> Self {
-    self.init(name, file, function, line, action)
+open class DispatcherBase<State, Activity>: ScopedDispatcherBase<State, Activity, State> {
+      
+  public init(
+    targetStore: Store<State, Activity>
+  ) {
+    super.init(targetStore: targetStore, scope: \State.self)
   }
   
 }
+

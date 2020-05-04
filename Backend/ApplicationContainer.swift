@@ -18,7 +18,7 @@ public enum ApplicationContainer {
   public static var activeContexts: [AppContext] = []
   
   public static func makeContext() -> AppContext {
-    let id = dispatcher.accept { $0.makeSessionState() }
+    let id = dispatcher.makeSessionState()
     let context = AppContext(sessionStateID: id)
     activeContexts.append(context)
     return context
@@ -28,16 +28,15 @@ public enum ApplicationContainer {
 public final class ApplicationDispatcher: Store.Dispatcher {
   
   fileprivate init() {
-    super.init(target: ApplicationContainer.store)
+    super.init(targetStore: ApplicationContainer.store)
   }
    
-  public func makeSessionState() -> Mutation<SessionState.ID> {
-    return .mutation {
+  public func makeSessionState() -> SessionState.ID {
+    commit {
       let state = SessionState()
       $0.sessions[state.id] = state
       return state.id
-    }
-          
+    }          
   }
 }
 

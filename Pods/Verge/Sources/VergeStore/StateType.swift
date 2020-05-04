@@ -21,12 +21,74 @@
 
 import Foundation
 
+/// A protocol describes the type is a state of the store.
+/// Store requires State object that has StateType.
+///
+/// You may use ExtendedStateType to define computed property with caching to be performant.
 public protocol StateType {
   
 }
 
+/// A container object to group getter properties.
+/// Mainly it would be used with dynamicMemberLookup.
+/// Therefore it must be initialized with no args.
+public protocol ExtendedType {
+  
+  /// Currently limitation
+  /// To get better performance, return shared initialized instance
+  ///
+  /// This property will be accessed by using computed property
+  ///
+  /// ```
+  /// static let instance: YourExtendedType = .init()
+  /// ```
+  ///
+  static var instance: Self { get }
+}
+
+/** A protocol extended from StateType
+ ```
+ struct State: ExtendedStateType {
+ 
+   var name: String = "muukii"
+
+   struct Extended: ExtendedType {
+      
+     let nameCount = Field.Computed(\.value.count)
+       .ifChanged(keySelector: \.value, comparer: .init(==))
+      
+    }
+ }
+ 
+ let store: MyStore<State, Never>
+ 
+ let value: Int = store.changes.computed.nameCount
+ ```
+*/
+public protocol ExtendedStateType: StateType {
+  
+  associatedtype Extended: ExtendedType
+}
+
 public enum StateUpdatingError: Swift.Error {
   case targetWasNull
+}
+
+public protocol _VergeStore_OptionalProtocol {
+  associatedtype Wrapped
+  var _vergestore_wrappedValue: Wrapped? { get set }
+}
+
+extension Optional: _VergeStore_OptionalProtocol {
+  
+  public var _vergestore_wrappedValue: Wrapped? {
+    get {
+      return self
+    }
+    mutating set {
+      self = newValue
+    }
+  }
 }
 
 extension StateType {
@@ -44,9 +106,22 @@ extension StateType {
     try update(&self[keyPath: keyPath])
   }
   
+  public mutating func updateIfValid<T: VolatileType, Result, FinalResult>(
+    target keyPath: WritableKeyPath<Self, T>,
+    update: (inout T.State) throws -> Result,
+    completion: (Result) -> FinalResult
+  ) rethrows -> FinalResult? {
+    
+    switch self[keyPath: keyPath].box {
+    case .none:
+      return nil
+    case .some:
+      return completion(try update(&self[keyPath: keyPath].unsafelyUnwrap))
+    }
+  }
+  
   public mutating func update<Return>(update: (inout Self) throws -> Return) rethrows -> Return {
     try update(&self)
   }
   
 }
-

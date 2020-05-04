@@ -15,7 +15,7 @@ import Backend
 struct MainTabView: View {
   
   @EnvironmentObject var store: Store
-  @EnvironmentObject var uiDispatcher: SessionUIDispatcher
+  let uiDispatcher: SessionUIDispatcher
   
   @State var selected: UIState.EditingPush.ID?
   @State private var subscriptions = Set<AnyCancellable>()
@@ -28,16 +28,14 @@ struct MainTabView: View {
   }
   
   private func send(_ editing: UIState.EditingPush) {
-    self.context.stack.service.dispatch {
-      $0.send(
-        keyID: editing.data.keyID,
-        teamID: editing.data.teamID,
-        topic: editing.data.bundleID,
-        enviroment: editing.data.enviroment.asAPN,
-        payload: editing.data.payload,
-        deviceToken: editing.data.deviceToken
-      )
-    }
+    self.context.stack.service.send(
+      keyID: editing.data.keyID,
+      teamID: editing.data.teamID,
+      topic: editing.data.bundleID,
+      enviroment: editing.data.enviroment.asAPN,
+      payload: editing.data.payload,
+      deviceToken: editing.data.deviceToken
+    )
   }
   
   private func currentEditor() -> AnyView {
@@ -50,14 +48,14 @@ struct MainTabView: View {
             self.uiState.editingPush(by: id)!
         },
           set: { editing in
-            self.uiDispatcher.dispatch { $0.updateEditingPush(editing) }
+            self.uiDispatcher.updateEditingPush(editing)
         }), onRequestedSend: { editing in
           self.send(editing)
       }, onRequestedDelete: { editing in
         if self.selected == editing.id {
           self.selected = nil
         }
-        self.uiDispatcher.dispatch { $0.deleteEditingPush(editing) }
+        self.uiDispatcher.deleteEditingPush(editing)
       })
       )
     } else {
@@ -72,7 +70,7 @@ struct MainTabView: View {
       panel.begin { (response) in
         guard response == .OK else { return }
         let url = panel.urls.first!
-        self.context.stack.service.commit { $0.setP8FileURL(url) }
+        self.context.stack.service.setP8FileURL(url)
       }
     }) {
       Text("Select p8 file")
@@ -81,7 +79,7 @@ struct MainTabView: View {
   
   private func newTabView() -> some View {
     Button(action: {
-      self.uiDispatcher.dispatch { $0.addTab() }
+      self.uiDispatcher.addTab()
     }) {
       Text("New Push")
     }

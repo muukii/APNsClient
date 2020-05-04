@@ -22,52 +22,223 @@
 import Foundation
 import os
 
-public final class EventEmitterSubscribeToken: Hashable {
-  public static func == (lhs: EventEmitterSubscribeToken, rhs: EventEmitterSubscribeToken) -> Bool {
+/// A type-erasing cancellable object that executes a provided closure when canceled.
+/// An AnyCancellable instance automatically calls cancel() when deinitialized.
+/// To cancel depending owner, can be written following
+///
+/// ```
+/// class ViewController {
+///
+///   var subscriptions = Set<AutoCancellable>()
+///
+///   func something() {
+///
+///   let derived = store.derived(...)
+///
+///   derived
+///     .subscribeStateChanges { ... }
+///     .store(in: &subscriptions)
+///   }
+///
+/// }
+/// ```
+public final class VergeAnyCancellable: Hashable, CancellableType {
+  
+  private let lock = NSLock()
+  
+  private var wasCancelled = false
+
+  public static func == (lhs: VergeAnyCancellable, rhs: VergeAnyCancellable) -> Bool {
     lhs === rhs
   }
   
   public func hash(into hasher: inout Hasher) {
     ObjectIdentifier(self).hash(into: &hasher)
   }
+  
+  private var actions: ContiguousArray<() -> Void> = .init()
+  
+  public init(onDeinit: @escaping () -> Void) {
+    self.actions = [onDeinit]
+  }
+  
+  public convenience init<C>(_ cancellable: C) where C : CancellableType {
+    self.init {
+      cancellable.cancel()
+    }
+  }
+  
+  public convenience init(_ cancellable: CancellableType) {
+    self.init {
+      cancellable.cancel()
+    }
+  }
+  
+  public func insert(_ cancellable: CancellableType) {
+    actions.append {
+      cancellable.cancel()
+    }
+  }
+  
+  public func insert(onDeinit: @escaping () -> Void) {
+    actions.append(onDeinit)
+  }
+    
+  deinit {
+    cancel()
+  }
+  
+  public func cancel() {
+    
+    lock.lock()
+    defer {
+      lock.unlock()
+    }
+    
+    guard !wasCancelled else { return }
+    wasCancelled = true
+    
+    actions.forEach {
+      $0()
+    }
+  }
+  
+  
+}
+
+/// An object to cancel subscription
+///
+/// To cancel depending owner, can be written following
+///
+/// ```
+/// class ViewController {
+///
+///   var subscriptions = Set<AutoCancellable>()
+///
+///   func something() {
+///
+///   let derived = store.derived(...)
+///
+///   derived
+///     .subscribeStateChanges { ... }
+///     .store(in: &subscriptions)
+///   }
+///
+/// }
+/// ```
+///
+public protocol CancellableType {
+  
+  func cancel()
+}
+
+extension CancellableType {
+  
+  public func asAutoCancellable() -> VergeAnyCancellable {
+    .init(self)
+  }
+}
+
+extension CancellableType {
+      
+  /// Stores this cancellable instance in the specified collection.
+  ///
+  /// According to Combine.framework API Design.
+  public func store<C>(in collection: inout C) where C : RangeReplaceableCollection, C.Element == VergeAnyCancellable {
+    collection.append(.init(self))
+  }
+  
+  /// Stores this cancellable instance in the specified set.
+  ///
+  /// According to Combine.framework API Design.
+  public func store(in set: inout Set<VergeAnyCancellable>) {
+    set.insert(.init(self))
+  }
+  
+}
+
+#if canImport(Combine)
+
+import Combine
+
+extension CancellableType {
+    
+  /// Interop with Combine
+  @available(iOS 13, macOS 10.15, *)
+  public func store(in set: inout Set<AnyCancellable>) {
+    set.insert(AnyCancellable.init {
+      self.cancel()
+    })
+  }
+  
+}
+
+#endif
+
+public final class EventEmitterCancellable: Hashable, CancellableType {
+  
+  public static func == (lhs: EventEmitterCancellable, rhs: EventEmitterCancellable) -> Bool {
+    lhs === rhs
+  }
+  
+  private weak var owner: EventEmitterType?
+  
+  fileprivate init(owner: EventEmitterType) {
+    self.owner = owner
+  }
+  
+  public func hash(into hasher: inout Hasher) {
+    ObjectIdentifier(self).hash(into: &hasher)
+  }
+  
+  public func cancel() {
+    owner?.remove(self)
+  }
+}
+
+public protocol EventEmitterType: AnyObject {
+  func remove(_ token: EventEmitterCancellable)
 }
 
 /// Instead of Combine
-public final class EventEmitter<Event> {
+public final class EventEmitter<Event>: EventEmitterType {
   
   private var __publisher: Any?
   
-  private var lock = os_unfair_lock_s()
+  private let lock = NSRecursiveLock()
   
-  private var subscribers: [EventEmitterSubscribeToken : (Event) -> Void] = [:]
+  private var subscribers: [EventEmitterCancellable : (Event) -> Void] = [:]
   
   public init() {
     
   }
       
   public func accept(_ event: Event) {
-    var targets: [(Event) -> Void]
-    os_unfair_lock_lock(&lock)
-    targets = subscribers.map { $0.value }
-    os_unfair_lock_unlock(&lock)
+    let targets: Dictionary<EventEmitterCancellable, (Event) -> Void>.Values
+    lock.lock()
+    targets = subscribers.values
+    lock.unlock()
     targets.forEach {
+      #if DEBUG
+      vergeSignpostEvent("EventEmitter.emit")
+      #endif
       $0(event)
     }
   }
   
   @discardableResult
-  public func add(_ eventReceiver: @escaping (Event) -> Void) -> EventEmitterSubscribeToken {
-    let token = EventEmitterSubscribeToken()
-    os_unfair_lock_lock(&lock)
+  public func add(_ eventReceiver: @escaping (Event) -> Void) -> EventEmitterCancellable {
+    let token = EventEmitterCancellable(owner: self)
+    lock.lock()
     subscribers[token] = eventReceiver
-    os_unfair_lock_unlock(&lock)
+    lock.unlock()
     return token
   }
   
-  public func remove(_ token: EventEmitterSubscribeToken) {
-    os_unfair_lock_lock(&lock)
+  public func remove(_ token: EventEmitterCancellable) {
+    lock.lock()
     subscribers.removeValue(forKey: token)
-    os_unfair_lock_unlock(&lock)
+    lock.unlock()
   }
 }
 
@@ -105,7 +276,7 @@ extension EventEmitter {
     public let combineIdentifier: CombineIdentifier = .init()
     
     private let subscriber: AnySubscriber<Event, Never>
-    private let eventEmitterSubscription: EventEmitterSubscribeToken
+    private let eventEmitterSubscription: EventEmitterCancellable
     private weak var eventEmitter: EventEmitter<Event>?
     
     init(subscriber: AnySubscriber<Event, Never>, eventEmitter: EventEmitter<Event>) {

@@ -15,7 +15,7 @@ import Backend
 struct RootView: View {
   
   @EnvironmentObject var store: Store
-  @EnvironmentObject var uiDispatcher: SessionUIDispatcher
+  let uiDispatcher: SessionUIDispatcher
   
   var sessionState: SessionState {
     store.state.sessions[context.sessionStateID]!
@@ -24,7 +24,11 @@ struct RootView: View {
   let context: AppContext
   
   var body: some View {
-    MainTabView(context: context, sessionState: sessionState)
+    MainTabView(
+      uiDispatcher: uiDispatcher,
+      context: context,
+      sessionState: sessionState
+    )
   }
 }
 

@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2019 muukii
+// Copyright (c) 2020 muukii
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -19,41 +19,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-open class DispatcherBase<State: StateType, Activity>: DispatcherType {
-        
-  public typealias Context = DispatcherContext<DispatcherBase<State, Activity>>
-  
-  public let target: StoreBase<State, Activity>
-  
-  private var logger: StoreLogger? {
-    target.logger
-  }
-  
-  public init(target store: StoreBase<State, Activity>) {
-    self.target = store
-    
-    logger?.didCreateDispatcher(store: store, dispatcher: self)
-  }
-  
-  deinit {
-    logger?.didDestroyDispatcher(store: target, dispatcher: self)
-  }
-    
-}
+import Foundation
 
-public protocol _VergeStore_OptionalProtocol {
-  associatedtype Wrapped
-  var _vergestore_wrappedValue: Wrapped? { get set }
-}
-
-extension Optional: _VergeStore_OptionalProtocol {
+/// A trace that indicates the activity where comes from.
+public struct ActivityTrace: Encodable {
   
-  public var _vergestore_wrappedValue: Wrapped? {
-    get {
-      return self
-    }
-    mutating set {
-      self = newValue
-    }
-  }
+  public let createdAt: Date = .init()
+  public let name: String
+  public let file: String
+  public let function: String
+  public let line: UInt
+  
 }

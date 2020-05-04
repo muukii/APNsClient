@@ -52,17 +52,8 @@ extension SessionState {
   }
 }
 
-extension DispatcherContext where Dispatcher : SessionUIDispatcher {
-  
-  var scopedState: SessionState {
-    state.sessions[dispatcher.sessionStateID]!
-  }
-}
-
-final class SessionUIDispatcher: Backend.Store.Dispatcher {
-  
-  public let scopedStateKeyPath: WritableKeyPath<SessionService.State, SessionState>
-  
+final class SessionUIDispatcher: Backend.Store.ScopedDispatcher<SessionState> {
+    
   fileprivate let queue = DispatchQueue(label: "save")
   fileprivate let encoder = JSONEncoder()
   fileprivate let decoder = JSONDecoder()
@@ -71,94 +62,68 @@ final class SessionUIDispatcher: Backend.Store.Dispatcher {
   
   init(sessionStateID: String) {
     self.sessionStateID = sessionStateID
-    self.scopedStateKeyPath = \AppState.sessions[sessionStateID]!
-    super.init(target: ApplicationContainer.store)
-    dispatch { $0.restoreState() }
+    super.init(targetStore: ApplicationContainer.store, scope: \AppState.sessions[sessionStateID]!)
+    
+    restoreState()
   }
       
-  func setInitialState() -> Mutation<Void> {
-    return .mutation(scopedStateKeyPath) {
+  func setInitialState() {
+    commit {
       if $0._ui == nil {
         $0.ui = .init()
       }
     }
   }
-  
-  fileprivate func addTab() -> Mutation<Void> {
-    return .mutation(scopedStateKeyPath) {
-      let push = UIState.EditingPush(name: "Untitled")
-      $0.ui.editing.editingPushesTable[push.id] = push
-      $0.ui.editing.editingPushIDs.append(push.id)
-    }
-  }
-  
-  fileprivate func updateEditingPush(_ editingPush: UIState.EditingPush) -> Mutation<Void> {
-    return .mutation(scopedStateKeyPath) {
-      $0.ui.editing.editingPushesTable[editingPush.id] = editingPush
-    }
-  }
-  
-  fileprivate func deleteEditingPush(_ editingPush: UIState.EditingPush) -> Mutation<Void> {
-     return .mutation(scopedStateKeyPath) { s in
-      s.ui.editing.editingPushesTable.removeValue(forKey: editingPush.id)
-      s.ui.editing.editingPushIDs.removeAll { $0 == editingPush.id }
-    }
-  }
-  
-  fileprivate func updateUIEditing(_ editing: UIState.Editing) -> Mutation<Void> {
-     return .mutation(scopedStateKeyPath) {
+       
+  fileprivate func updateUIEditing(_ editing: UIState.Editing) {
+    commit {
       $0.ui.editing = editing
     }
   }
   
-  func addTab() -> Action<Void> {
-    return .action { c in
-      c.commit { $0.addTab() }
-      c.dispatch { $0.saveCurrentEditing() }
+  func addTab() {
+    commit {
+      let push = UIState.EditingPush(name: "Untitled")
+      $0.ui.editing.editingPushesTable[push.id] = push
+      $0.ui.editing.editingPushIDs.append(push.id)
     }
+    saveCurrentEditing()
   }
   
-  func updateEditingPush(_ editingPush: UIState.EditingPush) -> Action<Void> {
-    return .action { c in
-      c.commit { $0.updateEditingPush(editingPush) }
-      c.dispatch { $0.saveCurrentEditing() }
+  func updateEditingPush(_ editingPush: UIState.EditingPush) {
+    commit {
+      $0.ui.editing.editingPushesTable[editingPush.id] = editingPush
     }
-    
+    saveCurrentEditing()
   }
   
-  func deleteEditingPush(_ editingPush: UIState.EditingPush) -> Action<Void> {
-    return .action { c in
-      c.commit { $0.deleteEditingPush(editingPush) }
-      c.dispatch { $0.saveCurrentEditing() }
+  func deleteEditingPush(_ editingPush: UIState.EditingPush) {
+    commit {
+      $0.ui.editing.editingPushesTable.removeValue(forKey: editingPush.id)
+      $0.ui.editing.editingPushIDs.removeAll { $0 == editingPush.id }
     }
-    
+    saveCurrentEditing()
   }
   
-  func restoreState() -> Action<Void> {
+  func restoreState() {
     // TODO: For now we use very bad performance code,
-     return .action { c in
-      c.commit { $0.setInitialState() }
-      self.queue.async {
-        if let data = UserDefaults.standard.data(forKey: "editing") {
-          
-          let editing = try! self.decoder.decode(UIState.Editing.self, from: data)
-          c.commit { $0.updateUIEditing(editing) }
-        }
+     setInitialState()
+    self.queue.async {
+      if let data = UserDefaults.standard.data(forKey: "editing") {
+        
+        let editing = try! self.decoder.decode(UIState.Editing.self, from: data)
+        self.updateUIEditing(editing)
       }
     }
   }
   
-  private func saveCurrentEditing() -> Action<Void> {
-    return .action { c in
+  private func saveCurrentEditing() {
+    // TODO: For now we use very bad performance code,
+    self.queue.async {
       
-      // TODO: For now we use very bad performance code,
-      self.queue.async {
-        
-        let data = try! self.encoder.encode(c.scopedState.ui.editing)
-        
-        UserDefaults.standard.set(data, forKey: "editing")
-        
-      }
+      let data = try! self.encoder.encode(self.state.ui.editing)
+      
+      UserDefaults.standard.set(data, forKey: "editing")
     }
   }
 }
